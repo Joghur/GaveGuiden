@@ -3,15 +3,25 @@ import { useTranslation } from "react-i18next";
 
 import { Wish } from "./types";
 import WishItem from "./WishItem";
-import { queryDocuments } from "./database";
+import { queryDocuments, saveData } from "./database";
 import WishDialog from "./WishDialog";
+import { Grid, Typography, List, ListItem } from "@mui/material";
+
+const shuffle = () => {
+  let unshuffled = ["Esther", "Isabel"];
+
+  return unshuffled
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+};
 
 function Guide() {
   const { t } = useTranslation(["translation"]);
 
   const [wishes, setWishes] = useState<Wish[]>([]);
-  const [wish, setWish] = useState<Wish>();
   const [openModal, setOpenModal] = useState(false);
+  const [personOrder] = useState(shuffle);
 
   const getData = async () => {
     const data = await queryDocuments("wishes", "groupId", "==", 2);
@@ -20,70 +30,75 @@ function Guide() {
     }
   };
 
-  console.log("wishes", wishes);
-  console.log("wish --------------", wish);
+  // console.log("wishes", wishes);
 
   useEffect(() => {
     getData();
   }, []);
 
-  const setData = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
-    // const einWish: Wish = {
-    //   groupId: 2,
-    //   titel: "Smykker",
-    //   content: "string",
-    //   price: "string",
-    //   status: "bought",
-    //   person: "Isabel",
-    //   url: "string",
-    //   imageUri: "string",
-    //   comments: [
-    //     {
-    //       commenter: "Hans",
-    //       comment: "Den har jeg købt",
-    //       createdAt: new Date(),
-    //     },
-    //   ],
-    //   createdAt: new Date(),
-    // };
-    // const res = await saveData("wishes", einWish);
-    // console.log("res guide", res);
-    // setWishes((old) => [...old, einWish]);
-    // setMakeWish(true);
-  };
-
   const handleClickOpen = () => {
     setOpenModal(true);
   };
 
-  const handleClose = (value?: Wish) => {
+  const handleClose = async (value?: Wish) => {
+    // console.log("value", value);
     setOpenModal(false);
-    setWish(value);
+    if (value) {
+      const res = await saveData("wishes", value);
+      if (res.success) {
+        setWishes((old: Wish[]) => [...old, value]);
+      }
+    }
   };
-  console.log("openModal", openModal);
+
   return (
     <div>
       <div style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
         <button onClick={handleClickOpen}>{t("new")}</button>
       </div>
-      {!openModal &&
-        wishes.length > 0 &&
-        wishes.map((wish) => {
-          return (
-            <div style={{ width: 400, margin: 10 }}>
-              <WishItem wish={wish} />
-            </div>
-          );
-        })}
+      {!openModal && wishes.length > 0 && (
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+              {personOrder[0]}
+            </Typography>
+            <List>
+              {wishes
+                .filter((wish) => wish.person === personOrder[0])
+                .map((wish) => {
+                  return (
+                    <ListItem>
+                      <div style={{ width: 400, margin: 10 }}>
+                        <WishItem wish={wish} />
+                      </div>
+                    </ListItem>
+                  );
+                })}
+            </List>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+              {personOrder[1]}
+            </Typography>
+            <List dense={true}>
+              {wishes
+                .filter((wish) => wish.person === personOrder[1])
+                .map((wish) => {
+                  return (
+                    <ListItem>
+                      <div style={{ width: 400, margin: 10 }}>
+                        <WishItem wish={wish} />
+                      </div>
+                    </ListItem>
+                  );
+                })}
+            </List>
+          </Grid>
+        </Grid>
+      )}
       {openModal && (
         <>
-          <WishDialog
-            open={openModal}
-            onClose={(e) => handleClose(e)}
-          />
+          <WishDialog open={openModal} onClose={(e) => handleClose(e)} />
         </>
       )}
     </div>
@@ -149,3 +164,54 @@ export default Guide;
 //     },
 //   ]);
 // };
+
+// const wishesArray: Wish[] = [
+//   {
+//     status: "bought",
+//     comments: [
+//       {
+//         createdAt: {
+//           seconds: 1650056274,
+//           nanoseconds: 138000000,
+//         },
+//         comment: "Den har jeg købt",
+//         commenter: "Hans",
+//       },
+//     ],
+//     person: "Isabel",
+//     url: "string",
+//     titel: "Smykker",
+//     price: "string",
+//     createdAt: {
+//       seconds: 1650056274,
+//       nanoseconds: 138000000,
+//     },
+//     content: "string",
+//     groupId: 2,
+//     imageUri: "string",
+//   },
+//   {
+//     status: "bought",
+//     comments: [
+//       {
+//         createdAt: {
+//           seconds: 1650056274,
+//           nanoseconds: 138000000,
+//         },
+//         comment: "Den har jeg købt",
+//         commenter: "Hans",
+//       },
+//     ],
+//     person: "Isabel",
+//     url: "string",
+//     titel: "Smykker",
+//     price: "string",
+//     createdAt: {
+//       seconds: 1650056274,
+//       nanoseconds: 138000000,
+//     },
+//     content: "string",
+//     groupId: 2,
+//     imageUri: "string",
+//   },
+// ];

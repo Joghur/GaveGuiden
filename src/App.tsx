@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import Header from "./Header";
 import MainFeaturedPost from "./MainFeaturedPost";
 import FeaturedPost from "./FeaturedPost";
-import Invitation from "./Invitation";
 import Guide from "./Guide";
 import ToolbarLine from "./Toolbar";
 import QuiltedImageList from "./QuiltedImageList";
@@ -18,8 +17,7 @@ const theme = createTheme();
 export default function App() {
   const { t, i18n } = useTranslation(["translation"]);
 
-  const [page, setPage] = useState<"main" | "guide" | "invitation">("main");
-  const [language, setLanguage] = useState<LanguageShort>("de");
+  const [page, setPage] = useState<"main" | "guide">("main");
 
   const sections = [
     { title: "home", onClick: () => setPage("main") },
@@ -34,7 +32,6 @@ export default function App() {
 
   const changeLanguage = (lng: LanguageShort) => {
     i18n.changeLanguage(lng === "gb" ? "en" : lng); // i18n uses "en"
-    setLanguage(lng); // flag icons uses "gb"
   };
 
   return (

@@ -15,7 +15,7 @@ export default function WishItem(props: Props) {
   const { t } = useTranslation(["translation"]);
 
   const { wish } = props;
-
+  // console.log("wish", wish);
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea component="a" href="#">
@@ -24,25 +24,25 @@ export default function WishItem(props: Props) {
             <Typography component="h2" variant="h5">
               {wish.titel}
             </Typography>
-            <Typography variant="subtitle2" paragraph>
-              {wish?.updatedAt ? `${t("created")}: ` : `${t("updated")}: `}
+            {/* <Typography variant="subtitle2" paragraph>
+              {wish?.updatedAt ? `${t("updated")}: ` : `${t("created")}: `}
               {convertEpochSecondsToDateString(
                 wish?.updatedAt?.seconds
                   ? wish.updatedAt.seconds
                   : wish?.createdAt?.seconds,
                 "dd-MM-yyyy"
               )}
-            </Typography>
+            </Typography> */}
             <Typography variant="h6" paragraph>
-              {wish.content}
-            </Typography>
+              {wish?.content}
+            </Typography> 
           </CardContent>
-          {wish.imageUri && (
+          {wish?.imageUri && (
             <CardMedia
               component="img"
               sx={{ width: 160, display: { sm: "block" } }}
               image={wish.imageUri}
-              alt={wish.titel}
+              alt=""
             />
           )}
         </Card>

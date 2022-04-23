@@ -1,7 +1,7 @@
-export type Section = "main" | "guide" | "invitation";
+export type Section = "main" | "guide";
 export type LanguageShort = "dk" | "de" | "gb";
-export type WishStatus = "bought" | "seekingFunds" | undefined;
-export type WishPerson = "Esther" | "Isabel";
+export type WishStatus = "bought" | "seekingFunds" | "comment" | "pending";
+export type WishPerson = "Esther" | "Isabel" | undefined;
 
 // type DbDate = { seconds: number; nanoseconds: number };
 

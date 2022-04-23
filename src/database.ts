@@ -9,6 +9,7 @@ import {
   where,
   updateDoc,
   deleteField,
+  WhereFilterOp,
 } from "firebase/firestore/lite";
 
 import { Wish } from "./types";
@@ -20,6 +21,7 @@ interface Result {
 }
 
 export const saveData = async (dataCollection: string, data: Wish) => {
+  console.log("saveData data", data)
   const result: Result = { success: null, error: null };
   try {
     const docRef = await addDoc(collection(db, dataCollection), data);
@@ -29,6 +31,7 @@ export const saveData = async (dataCollection: string, data: Wish) => {
     console.error("saveData - Error adding document: ", e);
     result.error = e;
   }
+  console.log("result", result)
   return result;
 };
 
@@ -42,10 +45,10 @@ export const saveData = async (dataCollection: string, data: Wish) => {
  */
 export const queryDocuments = async (
   collectionName: string,
-  where1st: any,
-  where2nd: any,
+  where1st: string,
+  where2nd: WhereFilterOp,
   where3rd: unknown
-) => {
+): Promise<Result> => {
   const result: Result = { success: null, error: null };
 
   try {
