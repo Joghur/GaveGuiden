@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Container, CssBaseline, Divider, Grid } from "@mui/material";
+import { Container, CssBaseline, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import Header from "./Header";
@@ -10,8 +10,8 @@ import Invitation from "./Invitation";
 import Guide from "./Guide";
 import ToolbarLine from "./Toolbar";
 import QuiltedImageList from "./QuiltedImageList";
-import { Post, LanguageShort } from "./types";
-import { config, mainFeaturedPost, featuredPosts } from "./config";
+import { LanguageShort } from "./types";
+import { mainFeaturedPost, featuredPosts } from "./config";
 
 const theme = createTheme();
 
@@ -24,7 +24,6 @@ export default function App() {
   const sections = [
     { title: "home", onClick: () => setPage("main") },
     { title: "guide", onClick: () => setPage("guide") },
-    { title: "invitation", onClick: () => setPage("invitation") },
   ];
 
   const languageShorts = [
@@ -62,12 +61,6 @@ export default function App() {
             <Grid item justifyContent="center" style={{ marginTop: 70 }}>
               <QuiltedImageList />
             </Grid>
-          </>
-        )}
-        {page === "invitation" && (
-          <>
-            <Header title={t("invitation")} />
-            <Invitation languageShort={language} />
           </>
         )}
         {page === "guide" && (
