@@ -8,9 +8,9 @@ import WishDialog from "./WishDialog";
 import { Grid, Typography, List, ListItem } from "@mui/material";
 
 const shuffle = () => {
-  let unshuffled = ["Esther", "Isabel"];
+  let shuffableArray = ["Esther", "Isabel"];
 
-  return unshuffled
+  return shuffableArray
     .map((value) => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value);
@@ -60,15 +60,37 @@ function Guide() {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-              {personOrder[0]}
+              <Grid container direction="column" style={{ marginBottom: 13 }}>
+                <span
+                  style={{
+                    border: "2px solid silver ",
+                    borderRadius: 20,
+                    textAlign: "center",
+                    boxShadow: "2px 2px 6px gray",
+                    marginTop: 10,
+                    marginBottom: 10,
+                    width: "100%",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: 36,
+                      fontWeight: "bold",
+                      textShadow: "1px 1px 8px grey",
+                    }}
+                  >
+                    {personOrder[0]}
+                  </p>
+                </span>
+              </Grid>
             </Typography>
             <List>
               {wishes
                 .filter((wish) => wish.person === personOrder[0])
                 .map((wish) => {
                   return (
-                    <ListItem>
-                      <div style={{ width: 400, margin: 10 }}>
+                    <ListItem key={wish.id}>
+                      <div style={{ width: "100%", margin: 10 }}>
                         <WishItem wish={wish} />
                       </div>
                     </ListItem>
@@ -78,15 +100,37 @@ function Guide() {
           </Grid>
           <Grid item xs={12} md={6}>
             <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-              {personOrder[1]}
+              <Grid container direction="column" style={{ marginBottom: 13 }}>
+                <span
+                  style={{
+                    border: "2px solid silver",
+                    borderRadius: 20,
+                    textAlign: "center",
+                    boxShadow: "2px 2px 6px gray",
+                    marginTop: 10,
+                    marginBottom: 10,
+                    width: "100%",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: 36,
+                      fontWeight: "bold",
+                      textShadow: "1px 1px 8px grey",
+                    }}
+                  >
+                    {personOrder[1]}
+                  </p>
+                </span>
+              </Grid>
             </Typography>
             <List dense={true}>
               {wishes
                 .filter((wish) => wish.person === personOrder[1])
                 .map((wish) => {
                   return (
-                    <ListItem>
-                      <div style={{ width: 400, margin: 10 }}>
+                    <ListItem key={wish.id}>
+                      <div style={{ width: "100%", margin: 10 }}>
                         <WishItem wish={wish} />
                       </div>
                     </ListItem>

@@ -19,12 +19,8 @@ interface WishDialogProps {
 const defaultValues: Wish = {
   groupId: 2,
   titel: "",
-  content: "",
-  price: "",
   status: "pending",
   person: undefined,
-  url: "",
-  imageUri: "",
   comments: [],
   createdAt: new Date(),
 };

@@ -28,6 +28,7 @@ export interface Wish extends WishBase {
 // }
 
 export interface WishBase {
+  id?: string;
   groupId: number;
   titel: string;
   content?: string;
