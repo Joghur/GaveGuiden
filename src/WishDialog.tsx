@@ -5,6 +5,9 @@ import {
   Grid,
   TextField,
   Typography,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -67,67 +70,77 @@ export default function WishDialog(props: WishDialogProps) {
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Lav et nyt ønske</DialogTitle>
-      <Grid justifyContent="center">
-        <Typography paragraph>Modtager {formValues.person}</Typography>
-      </Grid>
-      <Grid container alignItems="center" direction="column" spacing={5}>
-        <Grid item>
-          <TextField
-            id="titel"
-            name="titel"
-            required
-            label={t("titel")}
-            type="text"
-            value={formValues.titel}
-            onChange={handleInputChange}
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="content"
-            name="content"
-            label={t("content")}
-            type="text"
-            value={formValues.content}
-            onChange={handleInputChange}
-            multiline
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="price"
-            name="price"
-            label={t("price")}
-            type="text"
-            value={formValues.price}
-            onChange={handleInputChange}
-            multiline
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="url"
-            name="url"
-            label="url"
-            type="text"
-            value={formValues.url}
-            onChange={handleInputChange}
-            multiline
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="imageUri"
-            name="imageUri"
-            label="imageUri"
-            type="text"
-            value={formValues.imageUri}
-            onChange={handleInputChange}
-            multiline
-          />
-        </Grid>
-        <Grid item alignItems="center">
+      <DialogContent>
+        <DialogContentText>
+          <Typography paragraph>
+            Modtager{" "}
+            <span
+              style={{
+                color: "blue",
+                borderWidth: 1,
+                borderColor: "black",
+              }}
+            >
+              {formValues.person}
+            </span>
+          </Typography>
+        </DialogContentText>
+        <DialogContentText>
+          <Typography color="red">{error}</Typography>
+        </DialogContentText>
+        <TextField
+          id="titel"
+          name="titel"
+          required
+          label={t("titel")}
+          type="text"
+          value={formValues.titel}
+          onChange={handleInputChange}
+        />
+        <TextField
+          id="content"
+          name="content"
+          label={t("content")}
+          type="text"
+          value={formValues.content}
+          onChange={handleInputChange}
+          multiline
+        />
+        <TextField
+          id="price"
+          name="price"
+          label={t("price")}
+          type="text"
+          value={formValues.price}
+          onChange={handleInputChange}
+          multiline
+        />
+        <TextField
+          id="url"
+          name="url"
+          label="url"
+          type="text"
+          value={formValues.url}
+          onChange={handleInputChange}
+          multiline
+        />
+        <TextField
+          id="imageUri"
+          name="imageUri"
+          label="imageUri"
+          type="text"
+          value={formValues.imageUri}
+          onChange={handleInputChange}
+          multiline
+        />
+      </DialogContent>
+      <Grid container justifyContent="center">
+        <DialogContentText>
           <Typography>Hvilken Modtager?</Typography>
+        </DialogContentText>
+      </Grid>
+      <Grid container justifyContent="center">
+        <DialogActions>
           <Button
             onClick={() =>
               setFormValues({
@@ -152,9 +165,10 @@ export default function WishDialog(props: WishDialogProps) {
           >
             Isabel
           </Button>
-        </Grid>
-        <Grid item>
-          <Typography color="red">{error}</Typography>
+        </DialogActions>
+      </Grid>
+      <Grid container justifyContent="center">
+        <DialogActions>
           <Button
             onClick={handleSubmit}
             variant="contained"
@@ -163,8 +177,7 @@ export default function WishDialog(props: WishDialogProps) {
           >
             {t("submit")}
           </Button>
-        </Grid>
-        <Grid></Grid>
+        </DialogActions>
       </Grid>
     </Dialog>
   );

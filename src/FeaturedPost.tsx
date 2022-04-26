@@ -26,7 +26,7 @@ export default function FeaturedPost(props: FeaturedPostProps) {
   const { post, onClick, onCancel } = props;
 
   return (
-    <Grid item xs={12} md={6}>
+    <Grid item>
       <Link onClick={onClick} underline="none">
         <Card sx={{ display: "flex" }}>
           <CardContent sx={{ flex: 1 }}>

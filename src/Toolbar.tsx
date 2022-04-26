@@ -4,7 +4,7 @@ import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import { useTranslation } from "react-i18next";
 
 interface HeaderProps {
-  sections: ReadonlyArray<{
+  sections?: ReadonlyArray<{
     title: string;
     onClick?: () => void;
   }>;
@@ -23,17 +23,19 @@ export default function ToolbarLine(props: HeaderProps) {
     <React.Fragment>
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item>
-          <Toolbar>
-            {sections.map((section) => (
-              <Link
-                key={section.title}
-                onClick={section?.onClick}
-                underline="none"
-              >
-                <Button size="small">{t(section.title)}</Button>
-              </Link>
-            ))}
-          </Toolbar>
+          {sections && (
+            <Toolbar>
+              {sections.map((section) => (
+                <Link
+                  key={section.title}
+                  onClick={section?.onClick}
+                  underline="none"
+                >
+                  <Button size="small">{t(section.title)}</Button>
+                </Link>
+              ))}
+            </Toolbar>
+          )}
         </Grid>
         <Grid item>
           <Toolbar component="nav" variant="dense" sx={{ overflowX: "auto" }}>

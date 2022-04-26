@@ -9,7 +9,7 @@ import FeaturedPost from "./FeaturedPost";
 import Guide from "./Guide";
 import ToolbarLine from "./Toolbar";
 import QuiltedImageList from "./QuiltedImageList";
-import { LanguageShort } from "./types";
+import { Post, LanguageShort } from "./types";
 import { mainFeaturedPost, featuredPosts } from "./config";
 
 const theme = createTheme();
@@ -17,13 +17,7 @@ const theme = createTheme();
 export default function App() {
   const { t, i18n } = useTranslation(["translation"]);
 
-  const [page, setPage] = useState<"main" | "guide">("main");
   const [language, setLanguage] = useState<LanguageShort>("de");
-
-  const sections = [
-    { title: "home", onClick: () => setPage("main") },
-    // { title: "guide", onClick: () => setPage("guide") },
-  ];
 
   const languageShorts = [
     { languageShort: "de", onClick: () => changeLanguage("de") },
@@ -35,42 +29,20 @@ export default function App() {
     i18n.changeLanguage(lng === "gb" ? "en" : lng); // i18n uses "en"
   };
 
-  const handleFeaturePostClick = (post: Post) => {
-    if (post.title === "guide") {
-      return null;
-    }
-    setPage(post.link);
-  };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <ToolbarLine sections={sections} languages={languageShorts} />
-        {page === "main" && (
-          <>
-            <Header title={t("mainHeader")} />
-            <MainFeaturedPost post={mainFeaturedPost} />
-            <Grid container spacing={4}>
-              {featuredPosts.map((post) => {
-                return (
-                  <FeaturedPost
-                    key={post.title}
-                    post={post}
-                    onClick={() => handleFeaturePostClick(post)}
-                    onCancel={() => setPage("main")}
-                  />
-                );
-              })}
-            </Grid>
-            <Grid item>
-              {/* <Guide /> */}
-            </Grid>
-            <Grid item justifyContent="center" style={{ marginTop: 70 }}>
-              <QuiltedImageList />
-            </Grid>
-          </>
-        )}
+        <ToolbarLine languages={languageShorts} />
+        <Header title={t("mainHeader")} />
+        <MainFeaturedPost post={mainFeaturedPost} />
+        <Grid>
+          <Guide />
+        </Grid>
+        <Grid item justifyContent="center" style={{ marginTop: 70 }}>
+          <QuiltedImageList />
+        </Grid>
       </Container>
     </ThemeProvider>
   );
