@@ -18,10 +18,11 @@ export default function App() {
   const { t, i18n } = useTranslation(["translation"]);
 
   const [page, setPage] = useState<"main" | "guide">("main");
+  const [language, setLanguage] = useState<LanguageShort>("de");
 
   const sections = [
     { title: "home", onClick: () => setPage("main") },
-    { title: "guide", onClick: () => setPage("guide") },
+    // { title: "guide", onClick: () => setPage("guide") },
   ];
 
   const languageShorts = [
@@ -32,6 +33,13 @@ export default function App() {
 
   const changeLanguage = (lng: LanguageShort) => {
     i18n.changeLanguage(lng === "gb" ? "en" : lng); // i18n uses "en"
+  };
+
+  const handleFeaturePostClick = (post: Post) => {
+    if (post.title === "guide") {
+      return null;
+    }
+    setPage(post.link);
   };
 
   return (
@@ -49,21 +57,18 @@ export default function App() {
                   <FeaturedPost
                     key={post.title}
                     post={post}
-                    onClick={() => setPage(post.link)}
+                    onClick={() => handleFeaturePostClick(post)}
                     onCancel={() => setPage("main")}
                   />
                 );
               })}
             </Grid>
+            <Grid item>
+              {/* <Guide /> */}
+            </Grid>
             <Grid item justifyContent="center" style={{ marginTop: 70 }}>
               <QuiltedImageList />
             </Grid>
-          </>
-        )}
-        {page === "guide" && (
-          <>
-            <Header title={t("guide")} />
-            <Guide />
           </>
         )}
       </Container>

@@ -4,7 +4,7 @@
   "guide": "Wunschliste",
   "guideDescription": "Siehe die Wunsche der Zwillinge",
   "invitation": "Einladung",
-  "invitationDescription": "Siehe die Einladung hier",
+  "invitationDescription": "Siehe Informationen aus der Einladung hier",
   "home": "Startseite",
   "change": "Ändern",
   "new": "Neuer Wunsch",
@@ -15,5 +15,6 @@
   "updated": "Aktualisiert",
   "titel": "Titel",
   "content": "Inhalt",
-  "submit": "Einreichen"
+  "submit": "Einreichen",
+  "wip": "Kommt bald...."
 }

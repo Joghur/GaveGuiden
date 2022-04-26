@@ -4,7 +4,7 @@
   "guide": "Wishing list",
   "guideDescription": "See the twins wishes",
   "invitation": "Invitation",
-  "invitationDescription": "See the invitation here",
+  "invitationDescription": "See information from invitation here",
   "home": "Home",
   "change": "Edit",
   "new": "New Wish",
@@ -15,6 +15,6 @@
   "updated": "Updated",
   "titel": "Title",
   "content": "Content",
-  "submit": "Submit"
-
+  "submit": "Submit",
+  "wip": "Work in progress...."
 }

@@ -4,7 +4,7 @@
   "guide": "Ønskeliste",
   "guideDescription": "Se tvillingernes ønsker",
   "invitation": "Invitation",
-  "invitationDescription": "Se invitationen her",
+  "invitationDescription": "Se information fra invitationen her",
   "home": "Hjem",
   "change": "Udskift",
   "new": "Nyt ønske",
@@ -15,5 +15,6 @@
   "updated": "Opdateret",
   "titel": "Titel",
   "content": "Indhold",
-  "submit": "Indsend"
+  "submit": "Indsend",
+  "wip": "Kommer snart...."
 }
