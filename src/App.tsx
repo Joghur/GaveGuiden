@@ -43,23 +43,22 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <ToolbarLine
-          sections={sections}
-          languages={languageShorts}
-        />
+        <ToolbarLine sections={sections} languages={languageShorts} />
         <Header title={t("mainHeader")} />
         {page === "main" && (
           <>
             <MainFeaturedPost post={mainFeaturedPost} />
-            <Grid container spacing={4}>
+            <Grid container spacing={4} justifyContent="center">
               {featuredPosts.map((post) => {
                 return (
-                  <FeaturedPost
-                    key={post.title}
-                    post={post}
-                    onClick={() => handleFeaturePostClick(post)}
-                    onCancel={() => setPage("main")}
-                  />
+                  <Grid item>
+                    <FeaturedPost
+                      key={post.title}
+                      post={post}
+                      onClick={() => handleFeaturePostClick(post)}
+                      onCancel={() => setPage("main")}
+                    />
+                  </Grid>
                 );
               })}
             </Grid>

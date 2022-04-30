@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Grid, Typography, List, ListItem } from "@mui/material";
+import { Button, Grid, Typography, Link, List, ListItem } from "@mui/material";
 
 import { Wish } from "./types";
 import WishItem from "./WishItem";
-import { queryDocuments, saveData } from "./database";
+import {
+  deleteDocument,
+  editDocument,
+  queryDocuments,
+  saveData,
+} from "./database";
 import WishDialog from "./WishDialog";
 import SettingsDialog from "./SettingsDialog";
 
@@ -17,14 +22,11 @@ const shuffle = () => {
     .map(({ value }) => value);
 };
 
-const findWord = (word: string, str: string) => {
-  return RegExp("\\b" + word + "\\b").test(str);
-};
-
 function Guide() {
   const { t } = useTranslation(["translation"]);
 
   const [wishes, setWishes] = useState<Wish[]>([]);
+  const [selectedWish, setSelectedWish] = useState<Wish | undefined>(undefined);
   const [openModal, setOpenModal] = useState(false);
   const [settingsModal, setSettingsModal] = useState(false);
   const [personOrder] = useState(shuffle);
@@ -46,30 +48,59 @@ function Guide() {
       setSettingsModal(true);
       return;
     }
-    if (findWord(user.toLowerCase(), "esther")) setConfirmant(true);
-    if (findWord(user.toLowerCase(), "isabel")) setConfirmant(true);
+    console.log("user", user);
+    console.log(
+      "user.trim().toLowerCase().search(esther)",
+      user.trim().toLowerCase().search("esther")
+    );
+    if (user.trim().toLowerCase().search("esther") > -1) setConfirmant(true);
+    if (user.trim().toLowerCase().search("isabel") > -1) setConfirmant(true);
     if (localStorage !== undefined) {
-      localStorage.setItem("user", user);
+      localStorage.setItem("user", user.trim());
     }
     setSettingsModal(false);
     getData();
   }, [user]);
-
-  console.log("confirmant", confirmant);
-  console.log("user", user);
 
   const handleClickOpen = () => {
     setOpenModal(true);
   };
 
   const handleClose = async (value?: Wish) => {
-    // console.log("value", value);
+    console.log("value", value);
     setOpenModal(false);
     if (value) {
-      const res = await saveData("wishes", value);
-      if (res.success) {
-        setWishes((old: Wish[]) => [...old, value]);
+      let res;
+      if (value?.id && value.id === selectedWish?.id) {
+        console.log("editDocument", editDocument);
+        res = await editDocument("wishes", value.id, value);
+      } else {
+        console.log("saveData", editDocument);
+        res = await saveData("wishes", value);
       }
+      if (res.success) {
+        setWishes((old: Wish[]) => {
+          const filteredWishes = old.filter((w) => w.id !== value?.id);
+          filteredWishes.push(value);
+          console.log("filteredWishes", filteredWishes);
+          return filteredWishes;
+        });
+      }
+    }
+    setSelectedWish(undefined);
+  };
+
+  const handleDelete = async (id: string | undefined) => {
+    console.log("id", id);
+    if (id) {
+      await deleteDocument("wishes", id);
+      setSelectedWish(undefined);
+      setOpenModal(false);
+      setWishes((old: Wish[]) => {
+        const filteredWishes = old.filter((w) => w.id !== id);
+        console.log("filteredWishes", filteredWishes);
+        return filteredWishes;
+      });
     }
   };
 
@@ -77,6 +108,11 @@ function Guide() {
     setUser(userName);
   };
 
+  const handleSelectedWish = (wish: Wish) => {
+    setSelectedWish(() => wish);
+    setOpenModal(() => true);
+  };
+  console.log("confirmant", confirmant);
   return (
     <div>
       <Grid
@@ -85,19 +121,33 @@ function Guide() {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Grid item>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleClickOpen}
-          >
-            {t("new")}
-          </Button>
-        </Grid>
-        <Grid item>
-          <Typography variant="h6">Hej {user}</Typography>
-        </Grid>
+        {confirmant && (
+          <Grid item>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleClickOpen}
+            >
+              {t("new")}
+            </Button>
+          </Grid>
+        )}
+        {user && (
+          <Grid item>
+            <Typography variant="h6">Hej {user}</Typography>
+          </Grid>
+        )}
       </Grid>
+      {user && !confirmant && (
+        <div style={{ margin: 100 }}>
+          <Typography variant="h3">{t("wip")}</Typography>
+        </div>
+      )}
+      {confirmant && !openModal && wishes.length === 0 && (
+        <div style={{ margin: 100 }}>
+          <Typography variant="h3">Ingen ønsker endnu</Typography>
+        </div>
+      )}
       {!openModal && wishes.length > 0 && (
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
@@ -133,7 +183,9 @@ function Guide() {
                   return (
                     <ListItem key={wish.id}>
                       <div style={{ width: "100%", margin: 10 }}>
-                        <WishItem wish={wish} />
+                        <Link onClick={() => handleSelectedWish(wish)}>
+                          <WishItem wish={wish} />
+                        </Link>
                       </div>
                     </ListItem>
                   );
@@ -173,7 +225,9 @@ function Guide() {
                   return (
                     <ListItem key={wish.id}>
                       <div style={{ width: "100%", margin: 10 }}>
-                        <WishItem wish={wish} />
+                        <Link onClick={() => handleSelectedWish(wish)}>
+                          <WishItem wish={wish} />
+                        </Link>
                       </div>
                     </ListItem>
                   );
@@ -182,7 +236,14 @@ function Guide() {
           </Grid>
         </Grid>
       )}
-      <WishDialog open={openModal} onClose={(e) => handleClose(e)} />
+      <WishDialog
+        open={openModal}
+        onClose={(e) => handleClose(e)}
+        onDelete={(id) => handleDelete(id)}
+        wish={selectedWish}
+        user={user}
+        confirmant={confirmant}
+      />
 
       <SettingsDialog
         open={settingsModal}

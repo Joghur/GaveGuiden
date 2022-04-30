@@ -21,8 +21,9 @@
   "imageUri": "Link to image",
   "newWish":"Make a new wish",
   "recipient":"Recipient",
-  "whichReceipient":"Which recipient?",
+  "whichRecipient":"Which recipient?",
   "wip": "Work in progress....",
+  "delete": "Delete",
   "errors":{
       "missingRecipient": "Please choose a gift recipient",
       "missingTitle":"Select a title"

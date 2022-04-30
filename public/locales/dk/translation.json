@@ -23,6 +23,7 @@
   "recipient":"Modtager",
   "whichRecipient":"Hvilken modtager?",
   "wip": "Kommer snart....",
+  "delete": "Slet",
   "errors":{
       "missingRecipient": "Vælg en gavemodtager",
       "missingTitle":"Vælg en titel"

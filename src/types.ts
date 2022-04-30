@@ -1,7 +1,6 @@
 export type Section = "main" | "guide";
 export type LanguageShort = "dk" | "de" | "gb";
 export type WishStatus = "bought" | "seekingFunds" | "comment" | "pending";
-export type WishPerson = "Esther" | "Isabel" | undefined;
 
 // type DbDate = { seconds: number; nanoseconds: number };
 
@@ -34,7 +33,7 @@ export interface WishBase {
   content?: string;
   price?: string;
   status?: WishStatus;
-  person: WishPerson;
+  person?: string;
   url?: string;
   imageUri?: string;
   comments?: Comment[];

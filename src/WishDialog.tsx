@@ -9,31 +9,35 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Wish } from "./types";
 
 interface WishDialogProps {
   onClose: (e?: Wish) => void;
+  onDelete: (e?: string) => void;
   open: boolean;
+  wish?: Wish;
+  user?: string;
+  confirmant?: boolean;
 }
-
-const defaultValues: Wish = {
-  groupId: 2,
-  titel: "",
-  status: "pending",
-  person: undefined,
-  comments: [],
-  createdAt: new Date(),
-};
 
 export default function WishDialog(props: WishDialogProps) {
   const { t } = useTranslation(["translation"]);
 
-  const { onClose, open } = props;
+  const { onClose, onDelete, open, wish, user, confirmant } = props;
 
-  const [formValues, setFormValues] = useState<Wish>(defaultValues);
+  const defaultValues: Wish = {
+    groupId: 2,
+    titel: "",
+    status: "pending",
+    person: confirmant ? user : undefined,
+    comments: [],
+    createdAt: new Date(),
+  };
+
+  const [formValues, setFormValues] = useState<Wish>(wish || defaultValues);
   const [error, setError] = useState("");
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
@@ -45,7 +49,16 @@ export default function WishDialog(props: WishDialogProps) {
     });
   };
 
-  // console.log("formValues", formValues);
+  useEffect(() => {
+    if (wish) {
+      setFormValues(wish);
+    }
+  }, [wish]);
+
+  console.log("wish", wish);
+  console.log("formValues", formValues);
+  console.log("WishDialog user", user);
+  console.log("confirmant", confirmant);
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -65,6 +78,13 @@ export default function WishDialog(props: WishDialogProps) {
 
   const handleClose = () => {
     onClose();
+  };
+
+  const handleDelete = () => {
+    console.log("WishDialog - formValues?.id", formValues?.id);
+    if (formValues?.id) {
+      onDelete(formValues?.id);
+    }
   };
 
   return (
@@ -136,7 +156,7 @@ export default function WishDialog(props: WishDialogProps) {
       </DialogContent>
       <Grid container justifyContent="center">
         <DialogContentText>
-          <Typography>{t("whichReceipient")}</Typography>
+          <Typography>{t("whichRecipient")}</Typography>
         </DialogContentText>
       </Grid>
       <Grid container justifyContent="center">
@@ -167,17 +187,31 @@ export default function WishDialog(props: WishDialogProps) {
           </Button>
         </DialogActions>
       </Grid>
-      <Grid container justifyContent="center">
-        <DialogActions>
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
-            {t("submit")}
-          </Button>
-        </DialogActions>
+      <Grid container justifyContent="space-between">
+        <Grid item>
+          <DialogActions>
+            <Button
+              onClick={handleSubmit}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              {t("submit")}
+            </Button>
+          </DialogActions>
+        </Grid>
+        <Grid item>
+          <DialogActions>
+            <Button
+              onClick={handleDelete}
+              variant="contained"
+              color="error"
+              type="submit"
+            >
+              {t("delete")}
+            </Button>
+          </DialogActions>
+        </Grid>
       </Grid>
     </Dialog>
   );
