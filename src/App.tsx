@@ -11,6 +11,7 @@ import ToolbarLine from "./Toolbar";
 import QuiltedImageList from "./QuiltedImageList";
 import { Post, LanguageShort } from "./types";
 import { mainFeaturedPost, featuredPosts } from "./config";
+import SettingsDialog from "./SettingsDialog";
 
 const theme = createTheme();
 
@@ -18,6 +19,7 @@ export default function App() {
   const { t, i18n } = useTranslation(["translation"]);
 
   const [language, setLanguage] = useState<LanguageShort>("de");
+  const [settingsModal, setSettingsModal] = useState(false);
 
   const languageShorts = [
     { languageShort: "de", onClick: () => changeLanguage("de") },
@@ -29,12 +31,15 @@ export default function App() {
     i18n.changeLanguage(lng === "gb" ? "en" : lng); // i18n uses "en"
   };
 
+  const handleSettings = () => {
+    setSettingsModal((old) => !old);
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <ToolbarLine languages={languageShorts} />
+        <ToolbarLine languages={languageShorts} settings={handleSettings} />
         <Header title={t("mainHeader")} />
         <MainFeaturedPost post={mainFeaturedPost} />
         <Grid>
@@ -44,6 +49,7 @@ export default function App() {
           <QuiltedImageList />
         </Grid>
       </Container>
+      {settingsModal && <SettingsDialog />}
     </ThemeProvider>
   );
 }

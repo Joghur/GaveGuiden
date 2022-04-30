@@ -51,12 +51,12 @@ export default function WishDialog(props: WishDialogProps) {
     event.preventDefault();
 
     if (!formValues.person) {
-      setError("Vælg en gavemodtager");
+      setError(t("errors.missingRecipient"));
       return;
     }
 
     if (!formValues.titel) {
-      setError("Vælg en titel");
+      setError("errors.missingTitle");
       return;
     }
 
@@ -69,11 +69,11 @@ export default function WishDialog(props: WishDialogProps) {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Lav et nyt ønske</DialogTitle>
+      <DialogTitle>{t("newWish")}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           <Typography paragraph>
-            Modtager{" "}
+            {t("recipient")}{" "}
             <span
               style={{
                 color: "blue",
@@ -118,7 +118,7 @@ export default function WishDialog(props: WishDialogProps) {
         <TextField
           id="url"
           name="url"
-          label="url"
+          label={t("vendorUrl")}
           type="text"
           value={formValues.url}
           onChange={handleInputChange}
@@ -127,7 +127,7 @@ export default function WishDialog(props: WishDialogProps) {
         <TextField
           id="imageUri"
           name="imageUri"
-          label="imageUri"
+          label={t("imageUri")}
           type="text"
           value={formValues.imageUri}
           onChange={handleInputChange}
@@ -136,7 +136,7 @@ export default function WishDialog(props: WishDialogProps) {
       </DialogContent>
       <Grid container justifyContent="center">
         <DialogContentText>
-          <Typography>Hvilken Modtager?</Typography>
+          <Typography>{t("whichReceipient")}</Typography>
         </DialogContentText>
       </Grid>
       <Grid container justifyContent="center">

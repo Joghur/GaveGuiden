@@ -16,5 +16,15 @@
   "titel": "Title",
   "content": "Content",
   "submit": "Submit",
-  "wip": "Work in progress...."
+  "price": "price",
+  "vendorUrl": "Link to vendor",
+  "imageUri": "Link to image",
+  "newWish":"Make a new wish",
+  "recipient":"Recipient",
+  "whichReceipient":"Which recipient?",
+  "wip": "Work in progress....",
+  "errors":{
+      "missingRecipient": "Please choose a gift recipient",
+      "missingTitle":"Select a title"
+  }
 }

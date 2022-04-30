@@ -16,5 +16,15 @@
   "titel": "Titel",
   "content": "Inhalt",
   "submit": "Einreichen",
-  "wip": "Kommt bald...."
+  "price": "Preis",
+  "vendorUrl": "Link zum Anbieter",
+  "imageUri": "Link zum Bild",
+  "newWish":"Neuer Wunsch",
+  "recipient":"Empfänger",
+  "whichRecipient":"Welche Empfänger?",
+  "wip": "Kommt bald....",
+  "errors":{
+      "missingRecipient": "Wählen Sie einen Geschenkempfänger aus",
+      "missingTitle":"Wählen Sie einen Titel aus"
+  }
 }

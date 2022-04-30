@@ -16,5 +16,15 @@
   "titel": "Titel",
   "content": "Indhold",
   "submit": "Indsend",
-  "wip": "Kommer snart...."
+  "price": "Pris",
+  "vendorUrl": "Link til forhandler",
+  "imageUri": "Link til billede",
+  "newWish":"Lav et nyt ønske",
+  "recipient":"Modtager",
+  "whichRecipient":"Hvilken modtager?",
+  "wip": "Kommer snart....",
+  "errors":{
+      "missingRecipient": "Vælg en gavemodtager",
+      "missingTitle":"Vælg en titel"
+  }
 }

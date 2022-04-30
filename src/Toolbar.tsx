@@ -2,6 +2,8 @@ import * as React from "react";
 import { Button, Grid, Link, Toolbar } from "@mui/material";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import { useTranslation } from "react-i18next";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 interface HeaderProps {
   sections?: ReadonlyArray<{
@@ -12,17 +14,24 @@ interface HeaderProps {
     languageShort: string;
     onClick?: () => void;
   }>;
+  settings: () => void;
 }
 
 export default function ToolbarLine(props: HeaderProps) {
   const { t } = useTranslation(["translation"]);
 
-  const { sections, languages } = props;
+  const { sections, languages, settings } = props;
 
   return (
     <React.Fragment>
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item>
+          <Link onClick={settings}>
+            <FontAwesomeIcon icon={faCog} />
+          </Link>
+        </Grid>
+
+        {/* <Grid item>
           {sections && (
             <Toolbar>
               {sections.map((section) => (
@@ -36,7 +45,7 @@ export default function ToolbarLine(props: HeaderProps) {
               ))}
             </Toolbar>
           )}
-        </Grid>
+        </Grid> */}
         <Grid item>
           <Toolbar component="nav" variant="dense" sx={{ overflowX: "auto" }}>
             {languages.map((section) => (
