@@ -14,7 +14,7 @@ interface HeaderProps {
     languageShort: string;
     onClick?: () => void;
   }>;
-  settings: () => void;
+  settings?: () => void;
 }
 
 export default function ToolbarLine(props: HeaderProps) {
@@ -25,13 +25,13 @@ export default function ToolbarLine(props: HeaderProps) {
   return (
     <React.Fragment>
       <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item>
+        {/* <Grid item>
           <Link onClick={settings}>
             <FontAwesomeIcon icon={faCog} />
           </Link>
-        </Grid>
+        </Grid> */}
 
-        {/* <Grid item>
+        <Grid item>
           {sections && (
             <Toolbar>
               {sections.map((section) => (
@@ -45,7 +45,7 @@ export default function ToolbarLine(props: HeaderProps) {
               ))}
             </Toolbar>
           )}
-        </Grid> */}
+        </Grid>
         <Grid item>
           <Toolbar component="nav" variant="dense" sx={{ overflowX: "auto" }}>
             {languages.map((section) => (

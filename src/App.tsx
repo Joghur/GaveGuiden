@@ -11,15 +11,19 @@ import ToolbarLine from "./Toolbar";
 import QuiltedImageList from "./QuiltedImageList";
 import { Post, LanguageShort } from "./types";
 import { mainFeaturedPost, featuredPosts } from "./config";
-import SettingsDialog from "./SettingsDialog";
 
 const theme = createTheme();
 
 export default function App() {
   const { t, i18n } = useTranslation(["translation"]);
 
+  const [page, setPage] = useState<"main" | "guide">("main");
   const [language, setLanguage] = useState<LanguageShort>("de");
-  const [settingsModal, setSettingsModal] = useState(false);
+
+  const sections = [
+    { title: "home", onClick: () => setPage("main") },
+    { title: "guide", onClick: () => setPage("guide") },
+  ];
 
   const languageShorts = [
     { languageShort: "de", onClick: () => changeLanguage("de") },
@@ -31,25 +35,45 @@ export default function App() {
     i18n.changeLanguage(lng === "gb" ? "en" : lng); // i18n uses "en"
   };
 
-  const handleSettings = () => {
-    setSettingsModal((old) => !old);
+  const handleFeaturePostClick = (post: Post) => {
+    setPage(post.link);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
-        <ToolbarLine languages={languageShorts} settings={handleSettings} />
+        <ToolbarLine
+          sections={sections}
+          languages={languageShorts}
+        />
         <Header title={t("mainHeader")} />
-        <MainFeaturedPost post={mainFeaturedPost} />
-        <Grid>
-          <Guide />
-        </Grid>
-        <Grid item justifyContent="center" style={{ marginTop: 70 }}>
-          <QuiltedImageList />
-        </Grid>
+        {page === "main" && (
+          <>
+            <MainFeaturedPost post={mainFeaturedPost} />
+            <Grid container spacing={4}>
+              {featuredPosts.map((post) => {
+                return (
+                  <FeaturedPost
+                    key={post.title}
+                    post={post}
+                    onClick={() => handleFeaturePostClick(post)}
+                    onCancel={() => setPage("main")}
+                  />
+                );
+              })}
+            </Grid>
+            <Grid item justifyContent="center" style={{ marginTop: 70 }}>
+              <QuiltedImageList />
+            </Grid>
+          </>
+        )}
+        {page === "guide" && (
+          <Grid item>
+            <Guide />
+          </Grid>
+        )}
       </Container>
-      {settingsModal && <SettingsDialog />}
     </ThemeProvider>
   );
 }

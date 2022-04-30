@@ -6,6 +6,7 @@ import { Wish } from "./types";
 import WishItem from "./WishItem";
 import { queryDocuments, saveData } from "./database";
 import WishDialog from "./WishDialog";
+import SettingsDialog from "./SettingsDialog";
 
 const shuffle = () => {
   let shuffableArray = ["Esther", "Isabel"];
@@ -16,12 +17,20 @@ const shuffle = () => {
     .map(({ value }) => value);
 };
 
+const findWord = (word: string, str: string) => {
+  return RegExp("\\b" + word + "\\b").test(str);
+};
+
 function Guide() {
   const { t } = useTranslation(["translation"]);
 
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [openModal, setOpenModal] = useState(false);
+  const [settingsModal, setSettingsModal] = useState(false);
   const [personOrder] = useState(shuffle);
+  const storageUser: string = localStorage.getItem("user") || "";
+  const [user, setUser] = useState(storageUser);
+  const [confirmant, setConfirmant] = useState(false);
 
   const getData = async () => {
     const data = await queryDocuments("wishes", "groupId", "==", 2);
@@ -33,8 +42,21 @@ function Guide() {
   // console.log("wishes", wishes);
 
   useEffect(() => {
+    if (!user) {
+      setSettingsModal(true);
+      return;
+    }
+    if (findWord(user.toLowerCase(), "esther")) setConfirmant(true);
+    if (findWord(user.toLowerCase(), "isabel")) setConfirmant(true);
+    if (localStorage !== undefined) {
+      localStorage.setItem("user", user);
+    }
+    setSettingsModal(false);
     getData();
-  }, []);
+  }, [user]);
+
+  console.log("confirmant", confirmant);
+  console.log("user", user);
 
   const handleClickOpen = () => {
     setOpenModal(true);
@@ -51,13 +73,31 @@ function Guide() {
     }
   };
 
+  const handleSubmit = (userName: string) => {
+    setUser(userName);
+  };
+
   return (
     <div>
-      <div style={{ flex: 1, flexDirection: "row", justifyContent: "center" }}>
-        <Button variant="contained" color="secondary" onClick={handleClickOpen}>
-          {t("new")}
-        </Button>
-      </div>
+      <Grid
+        container
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+      >
+        <Grid item>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleClickOpen}
+          >
+            {t("new")}
+          </Button>
+        </Grid>
+        <Grid item>
+          <Typography variant="h6">Hej {user}</Typography>
+        </Grid>
+      </Grid>
       {!openModal && wishes.length > 0 && (
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
@@ -142,11 +182,13 @@ function Guide() {
           </Grid>
         </Grid>
       )}
-      {openModal && (
-        <>
-          <WishDialog open={openModal} onClose={(e) => handleClose(e)} />
-        </>
-      )}
+      <WishDialog open={openModal} onClose={(e) => handleClose(e)} />
+
+      <SettingsDialog
+        open={settingsModal}
+        onClose={() => setSettingsModal(false)}
+        submit={handleSubmit}
+      />
     </div>
   );
 }
