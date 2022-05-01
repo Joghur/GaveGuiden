@@ -1,15 +1,43 @@
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardActionArea from "@mui/material/CardActionArea";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActionArea,
+  Chip,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import { Wish } from "./types";
+import { muiColors, Wish, WishStatus } from "./types";
 import { convertEpochSecondsToDateString } from "./dates";
 
 type Props = { wish: Wish };
+
+const chipColor = (status: string): muiColors => {
+  let color: muiColors;
+  if (!status) {
+    color = "success";
+  }
+
+  switch (status) {
+    case "bought":
+      color = "error";
+      break;
+
+    case "seekingFunds":
+      color = "warning";
+      break;
+
+    case "comment":
+      color = "info";
+      break;
+
+    default:
+      color = "success";
+  }
+  return color;
+};
 
 export default function WishItem(props: Props) {
   const { t } = useTranslation(["translation"]);
@@ -17,7 +45,7 @@ export default function WishItem(props: Props) {
   const { wish } = props;
   // console.log("wish", wish);
   return (
-    <Grid item xs={12} md={6}>
+    <Grid item xs={12} md={12}>
       <CardActionArea component="a" href="#">
         <Card sx={{ display: "flex" }}>
           <CardContent sx={{ flex: 1 }}>
@@ -35,7 +63,23 @@ export default function WishItem(props: Props) {
             </Typography> */}
             <Typography variant="h6" paragraph>
               {wish?.content}
-            </Typography> 
+            </Typography>
+
+            {wish.status && (
+              <>
+                <Grid container direction="row" alignItems="center">
+                  <Grid item>
+                    <Typography variant="body1">Status:</Typography>
+                  </Grid>
+                  <Grid item sx={{ ml: 2 }}>
+                    <Chip
+                      label={t(wish.status)}
+                      color={chipColor(wish.status)}
+                    />
+                  </Grid>
+                </Grid>
+              </>
+            )}
           </CardContent>
           {wish?.imageUri && (
             <CardMedia

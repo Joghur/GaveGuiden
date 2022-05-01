@@ -1,6 +1,15 @@
 export type Section = "main" | "guide";
 export type LanguageShort = "dk" | "de" | "gb";
 export type WishStatus = "bought" | "seekingFunds" | "comment" | "pending";
+export type muiColors =
+  | "success"
+  | "error"
+  | "warning"
+  | "info"
+  | "default"
+  | "secondary"
+  | "primary"
+  | undefined;
 
 // type DbDate = { seconds: number; nanoseconds: number };
 
@@ -36,7 +45,7 @@ export interface WishBase {
   person?: string;
   url?: string;
   imageUri?: string;
-  comments?: Comment[];
+  comments: Comment[];
 }
 
 export interface MainPost {

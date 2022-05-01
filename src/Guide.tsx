@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Grid, Typography, Link, List, ListItem } from "@mui/material";
+import {
+  Button,
+  Chip,
+  Grid,
+  Typography,
+  Link,
+  List,
+  ListItem,
+} from "@mui/material";
 
 import { Wish } from "./types";
 import WishItem from "./WishItem";
@@ -12,6 +20,7 @@ import {
 } from "./database";
 import WishDialog from "./WishDialog";
 import SettingsDialog from "./SettingsDialog";
+import Comments from "./Comments";
 
 const shuffle = () => {
   let shuffableArray = ["Esther", "Isabel"];
@@ -138,12 +147,12 @@ function Guide() {
           </Grid>
         )}
       </Grid>
-      {user && !confirmant && (
+      {/* {user && !confirmant && (
         <div style={{ margin: 100 }}>
           <Typography variant="h3">{t("wip")}</Typography>
         </div>
-      )}
-      {confirmant && !openModal && wishes.length === 0 && (
+      )} */}
+      {!openModal && wishes.length === 0 && (
         <div style={{ margin: 100 }}>
           <Typography variant="h3">Ingen ønsker endnu</Typography>
         </div>
@@ -216,23 +225,23 @@ function Guide() {
                     {personOrder[1]}
                   </p>
                 </span>
+                <List>
+                  {wishes
+                    .filter((wish) => wish.person === personOrder[1])
+                    .map((wish) => {
+                      return (
+                        <ListItem key={wish.id}>
+                          <div style={{ width: "100%", margin: 10 }}>
+                            <Link onClick={() => handleSelectedWish(wish)}>
+                              <WishItem wish={wish} />
+                            </Link>
+                          </div>
+                        </ListItem>
+                      );
+                    })}
+                </List>
               </Grid>
             </Typography>
-            <List dense={true}>
-              {wishes
-                .filter((wish) => wish.person === personOrder[1])
-                .map((wish) => {
-                  return (
-                    <ListItem key={wish.id}>
-                      <div style={{ width: "100%", margin: 10 }}>
-                        <Link onClick={() => handleSelectedWish(wish)}>
-                          <WishItem wish={wish} />
-                        </Link>
-                      </div>
-                    </ListItem>
-                  );
-                })}
-            </List>
           </Grid>
         </Grid>
       )}

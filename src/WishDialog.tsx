@@ -13,6 +13,8 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Wish } from "./types";
+import WishDialogConfirmant from "./WishDialogConfirmant";
+import WishDialogNonConfirmant from "./WishDialogNonConfirmant";
 
 interface WishDialogProps {
   onClose: (e?: Wish) => void;
@@ -39,9 +41,18 @@ export default function WishDialog(props: WishDialogProps) {
 
   const [formValues, setFormValues] = useState<Wish>(wish || defaultValues);
   const [error, setError] = useState("");
+  const [comment, setComment] = useState("");
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
+    console.log("handleInputChange name, value", name, value);
+    if (name === "comment") {
+      setFormValues({
+        ...formValues,
+        // comments: [...formValues.comments, comment],
+      });
+      return;
+    }
 
     setFormValues({
       ...formValues,
@@ -60,6 +71,12 @@ export default function WishDialog(props: WishDialogProps) {
   console.log("WishDialog user", user);
   console.log("confirmant", confirmant);
 
+  const handleComment = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target;
+    console.log("handleComment name, value", name, value);
+    setComment(value);
+  };
+
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
@@ -72,7 +89,12 @@ export default function WishDialog(props: WishDialogProps) {
       setError("errors.missingTitle");
       return;
     }
-
+    if (comment && user) {
+      formValues.comments = [
+        ...formValues.comments,
+        { comment, commenter: user, createdAt: new Date() },
+      ];
+    }
     onClose(formValues);
   };
 
@@ -89,130 +111,27 @@ export default function WishDialog(props: WishDialogProps) {
 
   return (
     <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>{t("newWish")}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          <Typography paragraph>
-            {t("recipient")}{" "}
-            <span
-              style={{
-                color: "blue",
-                borderWidth: 1,
-                borderColor: "black",
-              }}
-            >
-              {formValues.person}
-            </span>
-          </Typography>
-        </DialogContentText>
-        <DialogContentText>
-          <Typography color="red">{error}</Typography>
-        </DialogContentText>
-        <TextField
-          id="titel"
-          name="titel"
-          required
-          label={t("titel")}
-          type="text"
-          value={formValues.titel}
-          onChange={handleInputChange}
+      {confirmant && (
+        <WishDialogConfirmant
+          onDelete={onDelete}
+          formValues={formValues}
+          handleSubmit={handleSubmit}
+          handleInputChange={handleInputChange}
+          handleDelete={handleDelete}
+          setFormValues={setFormValues}
         />
-        <TextField
-          id="content"
-          name="content"
-          label={t("content")}
-          type="text"
-          value={formValues.content}
-          onChange={handleInputChange}
-          multiline
+      )}
+      {!confirmant && (
+        <WishDialogNonConfirmant
+          handleSubmit={handleSubmit}
+          handleComment={handleComment}
+          formValues={formValues}
+          comment={comment}
         />
-        <TextField
-          id="price"
-          name="price"
-          label={t("price")}
-          type="text"
-          value={formValues.price}
-          onChange={handleInputChange}
-          multiline
-        />
-        <TextField
-          id="url"
-          name="url"
-          label={t("vendorUrl")}
-          type="text"
-          value={formValues.url}
-          onChange={handleInputChange}
-          multiline
-        />
-        <TextField
-          id="imageUri"
-          name="imageUri"
-          label={t("imageUri")}
-          type="text"
-          value={formValues.imageUri}
-          onChange={handleInputChange}
-          multiline
-        />
-      </DialogContent>
-      <Grid container justifyContent="center">
-        <DialogContentText>
-          <Typography>{t("whichRecipient")}</Typography>
-        </DialogContentText>
-      </Grid>
-      <Grid container justifyContent="center">
-        <DialogActions>
-          <Button
-            onClick={() =>
-              setFormValues({
-                ...formValues,
-                person: "Esther",
-              })
-            }
-            variant="contained"
-            color="secondary"
-          >
-            Esther
-          </Button>
-          <Button
-            onClick={() =>
-              setFormValues({
-                ...formValues,
-                person: "Isabel",
-              })
-            }
-            variant="contained"
-            color="secondary"
-          >
-            Isabel
-          </Button>
-        </DialogActions>
-      </Grid>
-      <Grid container justifyContent="space-between">
-        <Grid item>
-          <DialogActions>
-            <Button
-              onClick={handleSubmit}
-              variant="contained"
-              color="primary"
-              type="submit"
-            >
-              {t("submit")}
-            </Button>
-          </DialogActions>
-        </Grid>
-        <Grid item>
-          <DialogActions>
-            <Button
-              onClick={handleDelete}
-              variant="contained"
-              color="error"
-              type="submit"
-            >
-              {t("delete")}
-            </Button>
-          </DialogActions>
-        </Grid>
-      </Grid>
+      )}
+      <DialogContentText>
+        <Typography color="red">{error}</Typography>
+      </DialogContentText>
     </Dialog>
   );
 }
