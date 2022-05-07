@@ -10,6 +10,7 @@ import {
   ListItem,
 } from "@mui/material";
 
+import Header from "./Header";
 import { Wish } from "./types";
 import WishItem from "./WishItem";
 import {
@@ -42,6 +43,8 @@ function Guide() {
   const storageUser: string = localStorage.getItem("user") || "";
   const [user, setUser] = useState(storageUser);
   const [confirmant, setConfirmant] = useState(false);
+  const [gift, setGift] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const getData = async () => {
     const data = await queryDocuments("wishes", "groupId", "==", 2);
@@ -50,61 +53,57 @@ function Guide() {
     }
   };
 
-  // console.log("wishes", wishes);
+  console.log("wishes", wishes);
 
   useEffect(() => {
     if (!user) {
       setSettingsModal(true);
       return;
     }
-    console.log("user", user);
-    console.log(
-      "user.trim().toLowerCase().search(esther)",
-      user.trim().toLowerCase().search("esther")
-    );
     if (user.trim().toLowerCase().search("esther") > -1) setConfirmant(true);
     if (user.trim().toLowerCase().search("isabel") > -1) setConfirmant(true);
-    if (localStorage !== undefined) {
-      localStorage.setItem("user", user.trim());
-    }
     setSettingsModal(false);
+    setGift(() => false);
     getData();
-  }, [user]);
+  }, [user, refresh]);
+
 
   const handleClickOpen = () => {
-    setOpenModal(true);
+    if (!confirmant) {
+      setGift(() => true);
+    }
+    setSelectedWish(() => undefined);
+    setOpenModal(() => true);
   };
 
   const handleClose = async (value?: Wish) => {
     console.log("value", value);
-    setOpenModal(false);
+    setOpenModal(() => false);
+    setGift(() => false);
     if (value) {
-      let res;
       if (value?.id && value.id === selectedWish?.id) {
-        console.log("editDocument", editDocument);
-        res = await editDocument("wishes", value.id, value);
+        await editDocument("wishes", value.id, value);
       } else {
-        console.log("saveData", editDocument);
-        res = await saveData("wishes", value);
+        if (value.person === "Isabel,Esther") {
+          value.person = "Isabel";
+          await saveData("wishes", value);
+          value.person = "Esther";
+          await saveData("wishes", value);
+        } else {
+          await saveData("wishes", value);
+        }
       }
-      if (res.success) {
-        setWishes((old: Wish[]) => {
-          const filteredWishes = old.filter((w) => w.id !== value?.id);
-          filteredWishes.push(value);
-          console.log("filteredWishes", filteredWishes);
-          return filteredWishes;
-        });
-      }
+      setRefresh((old) => !old);
     }
-    setSelectedWish(undefined);
   };
 
   const handleDelete = async (id: string | undefined) => {
     console.log("id", id);
     if (id) {
       await deleteDocument("wishes", id);
-      setSelectedWish(undefined);
-      setOpenModal(false);
+      setSelectedWish(() => undefined);
+      setOpenModal(() => false);
+      setGift(() => false);
       setWishes((old: Wish[]) => {
         const filteredWishes = old.filter((w) => w.id !== id);
         console.log("filteredWishes", filteredWishes);
@@ -113,7 +112,7 @@ function Guide() {
     }
   };
 
-  const handleSubmit = (userName: string) => {
+  const changeUser = (userName: string) => {
     setUser(userName);
   };
 
@@ -130,22 +129,52 @@ function Guide() {
         alignItems="center"
         justifyContent="space-between"
       >
-        {confirmant && (
-          <Grid item>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleClickOpen}
-            >
-              {t("new")}
-            </Button>
-          </Grid>
-        )}
-        {user && (
-          <Grid item>
-            <Typography variant="h6">Hej {user}</Typography>
-          </Grid>
-        )}
+        <Grid container direction="column" spacing={2}>
+          {user && (
+            <Grid item>
+              <Typography variant="h6" paragraph>{`${t(
+                "hi"
+              )} ${user}`}</Typography>
+            </Grid>
+          )}
+          {confirmant && (
+            <Grid item>
+              <Button
+                variant="contained"
+                color="secondary"
+                size="large"
+                onClick={handleClickOpen}
+              >
+                {t("new")}
+              </Button>
+            </Grid>
+          )}
+          {user && !confirmant && (
+            <>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="large"
+                  onClick={handleClickOpen}
+                >
+                  {t("newGift")}
+                </Button>
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle1">
+                  {t("pageGuide.newGift.text1")}
+                </Typography>
+                <Typography variant="subtitle1" paragraph>
+                  {t("pageGuide.newGift.text2")}
+                </Typography>
+                <Typography variant="subtitle1" color="GrayText">
+                  {t("pageGuide.newGift.text3")}
+                </Typography>
+              </Grid>
+            </>
+          )}
+        </Grid>
       </Grid>
       {/* {user && !confirmant && (
         <div style={{ margin: 100 }}>
@@ -154,14 +183,19 @@ function Guide() {
       )} */}
       {!openModal && wishes.length === 0 && (
         <div style={{ margin: 100 }}>
-          <Typography variant="h3">Ingen ønsker endnu</Typography>
+          <Typography variant="h3">{t("noWish")}</Typography>
         </div>
       )}
       {!openModal && wishes.length > 0 && (
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-              <Grid container direction="column" style={{ marginBottom: 13 }}>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                style={{ marginBottom: 13 }}
+              >
                 <span
                   style={{
                     border: "2px solid silver ",
@@ -183,27 +217,82 @@ function Guide() {
                     {personOrder[0]}
                   </p>
                 </span>
+                <List>
+                  {wishes
+                    .filter((wish) => {
+                      return (
+                        wish.giver === undefined &&
+                        wish.person === personOrder[0]
+                      );
+                    })
+                    .map((wish) => {
+                      return (
+                        <ListItem key={wish.id}>
+                          <div style={{ width: "100%", margin: 10 }}>
+                            <Link onClick={() => handleSelectedWish(wish)}>
+                              <WishItem wish={wish} confirmant={confirmant} />
+                            </Link>
+                          </div>
+                        </ListItem>
+                      );
+                    })}
+                </List>
+                {!confirmant && (
+                  <>
+                    <span
+                      style={{
+                        border: "2px solid brown",
+                        borderRadius: 20,
+                        textAlign: "center",
+                        boxShadow: "2px 2px 6px gray",
+                        marginTop: 10,
+                        marginBottom: 10,
+                        width: "75%",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: 20,
+                          fontWeight: "bold",
+                          textShadow: "1px 1px 8px grey",
+                        }}
+                      >
+                        {`${t("pageGuide.otherSuggestions")} ${personOrder[0]}`}
+                      </p>
+                    </span>
+                    <List>
+                      {wishes
+                        .filter(
+                          (wish) => wish.giver && wish.person === personOrder[0]
+                        )
+                        .map((wish) => {
+                          return (
+                            <ListItem key={wish.id}>
+                              <div style={{ width: "100%", margin: 10 }}>
+                                <Link onClick={() => handleSelectedWish(wish)}>
+                                  <WishItem
+                                    wish={wish}
+                                    confirmant={confirmant}
+                                  />
+                                </Link>
+                              </div>
+                            </ListItem>
+                          );
+                        })}
+                    </List>
+                  </>
+                )}
               </Grid>
             </Typography>
-            <List>
-              {wishes
-                .filter((wish) => wish.person === personOrder[0])
-                .map((wish) => {
-                  return (
-                    <ListItem key={wish.id}>
-                      <div style={{ width: "100%", margin: 10 }}>
-                        <Link onClick={() => handleSelectedWish(wish)}>
-                          <WishItem wish={wish} />
-                        </Link>
-                      </div>
-                    </ListItem>
-                  );
-                })}
-            </List>
           </Grid>
           <Grid item xs={12} md={6}>
             <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
-              <Grid container direction="column" style={{ marginBottom: 13 }}>
+              <Grid
+                container
+                direction="column"
+                alignItems="center"
+                style={{ marginBottom: 13 }}
+              >
                 <span
                   style={{
                     border: "2px solid silver",
@@ -227,19 +316,68 @@ function Guide() {
                 </span>
                 <List>
                   {wishes
-                    .filter((wish) => wish.person === personOrder[1])
+                    .filter(
+                      (wish) =>
+                        wish?.giver === undefined &&
+                        wish.person === personOrder[1]
+                    )
                     .map((wish) => {
                       return (
                         <ListItem key={wish.id}>
                           <div style={{ width: "100%", margin: 10 }}>
                             <Link onClick={() => handleSelectedWish(wish)}>
-                              <WishItem wish={wish} />
+                              <WishItem wish={wish} confirmant={confirmant} />
                             </Link>
                           </div>
                         </ListItem>
                       );
                     })}
                 </List>
+                {!confirmant && (
+                  <>
+                    <span
+                      style={{
+                        border: "2px solid brown",
+                        borderRadius: 20,
+                        textAlign: "center",
+                        boxShadow: "2px 2px 6px gray",
+                        marginTop: 10,
+                        marginBottom: 10,
+                        width: "75%",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: 20,
+                          fontWeight: "bold",
+                          textShadow: "1px 1px 8px grey",
+                        }}
+                      >
+                        {`${t("pageGuide.otherSuggestions")} ${personOrder[1]}`}
+                      </p>
+                    </span>
+                    <List>
+                      {wishes
+                        .filter(
+                          (wish) => wish.giver && wish.person === personOrder[1]
+                        )
+                        .map((wish) => {
+                          return (
+                            <ListItem key={wish.id}>
+                              <div style={{ width: "100%", margin: 10 }}>
+                                <Link onClick={() => handleSelectedWish(wish)}>
+                                  <WishItem
+                                    wish={wish}
+                                    confirmant={confirmant}
+                                  />
+                                </Link>
+                              </div>
+                            </ListItem>
+                          );
+                        })}
+                    </List>
+                  </>
+                )}
               </Grid>
             </Typography>
           </Grid>
@@ -252,12 +390,14 @@ function Guide() {
         wish={selectedWish}
         user={user}
         confirmant={confirmant}
+        gift={gift}
+        handleGift={() => setGift(() => true)}
       />
 
       <SettingsDialog
         open={settingsModal}
         onClose={() => setSettingsModal(false)}
-        submit={handleSubmit}
+        changeUser={changeUser}
       />
     </div>
   );

@@ -12,32 +12,44 @@ import {
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Wish } from "./types";
+import { Wish, WishStatus } from "./types";
 import WishDialogConfirmant from "./WishDialogConfirmant";
 import WishDialogNonConfirmant from "./WishDialogNonConfirmant";
 
 interface WishDialogProps {
   onClose: (e?: Wish) => void;
   onDelete: (e?: string) => void;
+  handleGift: () => void;
   open: boolean;
   wish?: Wish;
   user?: string;
   confirmant?: boolean;
+  gift: boolean;
 }
 
 export default function WishDialog(props: WishDialogProps) {
   const { t } = useTranslation(["translation"]);
 
-  const { onClose, onDelete, open, wish, user, confirmant } = props;
+  const { onClose, onDelete, handleGift, open, wish, user, confirmant, gift } =
+    props;
+
+  console.log("confirmant", confirmant);
 
   const defaultValues: Wish = {
     groupId: 2,
     titel: "",
     status: "pending",
+    content: "",
+    price: "",
     person: confirmant ? user : undefined,
+    giver: !confirmant ? user : undefined,
     comments: [],
     createdAt: new Date(),
+    url: "",
+    imageUri: "",
   };
+
+  console.log("wish", wish);
 
   const [formValues, setFormValues] = useState<Wish>(wish || defaultValues);
   const [error, setError] = useState("");
@@ -49,7 +61,6 @@ export default function WishDialog(props: WishDialogProps) {
     if (name === "comment") {
       setFormValues({
         ...formValues,
-        // comments: [...formValues.comments, comment],
       });
       return;
     }
@@ -62,22 +73,37 @@ export default function WishDialog(props: WishDialogProps) {
 
   useEffect(() => {
     if (wish) {
-      setFormValues(wish);
+      setFormValues(() => wish);
+    } else {
+      setFormValues(() => defaultValues);
     }
   }, [wish]);
 
-  console.log("wish", wish);
   console.log("formValues", formValues);
-  console.log("WishDialog user", user);
-  console.log("confirmant", confirmant);
+  //   console.log("WishDialog user", user);
+  //   console.log("confirmant", confirmant);
 
   const handleComment = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
     console.log("handleComment name, value", name, value);
     setComment(value);
+    if (formValues.status === "pending") {
+      setFormValues({
+        ...formValues,
+        status: "comment",
+      });
+    }
   };
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleStatus = (newStatus: WishStatus) => {
+    console.log("handleStatus newStatus", newStatus);
+    setFormValues({
+      ...formValues,
+      status: newStatus,
+    });
+  };
+
+  const handleSubmit = (event: any) => {
     event.preventDefault();
 
     if (!formValues.person) {
@@ -86,7 +112,7 @@ export default function WishDialog(props: WishDialogProps) {
     }
 
     if (!formValues.titel) {
-      setError("errors.missingTitle");
+      setError(t("errors.missingTitle"));
       return;
     }
     if (comment && user) {
@@ -95,6 +121,7 @@ export default function WishDialog(props: WishDialogProps) {
         { comment, commenter: user, createdAt: new Date() },
       ];
     }
+    console.log("wishDialog - formValues", formValues);
     onClose(formValues);
   };
 
@@ -110,8 +137,8 @@ export default function WishDialog(props: WishDialogProps) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
-      {confirmant && (
+    <Dialog onClose={handleClose} open={open} fullWidth maxWidth="sm">
+      {(gift || confirmant) && (
         <WishDialogConfirmant
           onDelete={onDelete}
           formValues={formValues}
@@ -119,12 +146,16 @@ export default function WishDialog(props: WishDialogProps) {
           handleInputChange={handleInputChange}
           handleDelete={handleDelete}
           setFormValues={setFormValues}
+          confirmant={confirmant}
         />
       )}
-      {!confirmant && (
+      {!gift && !confirmant && (
         <WishDialogNonConfirmant
           handleSubmit={handleSubmit}
           handleComment={handleComment}
+          handleClose={handleClose}
+          handleStatus={handleStatus}
+          handleGift={handleGift}
           formValues={formValues}
           comment={comment}
         />
