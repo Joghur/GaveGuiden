@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Container, CssBaseline, Grid } from "@mui/material";
+import { Container, CssBaseline, Grid, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import Header from "./Header";
@@ -44,10 +44,36 @@ export default function App() {
       <CssBaseline />
       <Container maxWidth="lg">
         <ToolbarLine sections={sections} languages={languageShorts} />
-        <Header title={t("mainHeader")} />
         {page === "main" && (
           <>
+            <Header title={t("mainHeader")} />
             <MainFeaturedPost post={mainFeaturedPost} />
+            <Grid
+              container
+              justifyContent="center"
+              spacing={3}
+              style={{ textAlign: "center" }}
+            >
+              <Grid item xs={7}>
+                <Typography variant="h5" style={{ fontStyle: "bold" }}>
+                  {t("pageIndex.newFeature")}
+                </Typography>
+                <Typography variant="body1">
+                  {t("pageIndex.newFeatureText.text1")}
+                </Typography>
+                <Typography variant="body1" paragraph>
+                  {t("pageIndex.newFeatureText.text2")}
+                </Typography>
+                <Typography variant="body1">
+                  {t("pageIndex.newFeatureText.text3")}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="subtitle1" color="GrayText" paragraph>
+                  {t("pageIndex.newFeatureText.text4")}
+                </Typography>
+              </Grid>
+            </Grid>
             <Grid container spacing={4} justifyContent="center">
               {featuredPosts.map((post) => {
                 return (

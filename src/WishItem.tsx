@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { muiColors, Wish, WishStatus } from "./types";
 import { convertEpochSecondsToDateString } from "./dates";
 
-type Props = { wish: Wish };
+type Props = { confirmant: boolean; wish: Wish };
 
 const chipColor = (status: string): muiColors => {
   let color: muiColors;
@@ -42,7 +42,7 @@ const chipColor = (status: string): muiColors => {
 export default function WishItem(props: Props) {
   const { t } = useTranslation(["translation"]);
 
-  const { wish } = props;
+  const { confirmant, wish } = props;
   // console.log("wish", wish);
   return (
     <Grid item xs={12} md={12}>
@@ -61,11 +61,16 @@ export default function WishItem(props: Props) {
                 "dd-MM-yyyy"
               )}
             </Typography> */}
-            <Typography variant="h6" paragraph>
+            {!confirmant && wish.giver && (
+              <Typography variant="body2" color="GrayText" paragraph>
+                {`${t("suggestionBy")}: ${wish.giver}`}
+              </Typography>
+            )}
+            <Typography variant="body2" paragraph>
               {wish?.content}
             </Typography>
 
-            {wish.status && (
+            {!confirmant && wish.status && (
               <>
                 <Grid container direction="row" alignItems="center">
                   <Grid item>
@@ -84,7 +89,12 @@ export default function WishItem(props: Props) {
           {wish?.imageUri && (
             <CardMedia
               component="img"
-              sx={{ width: 160, display: { sm: "block" } }}
+              sx={{
+                height: "100%",
+                width: 250,
+                display: { sm: "block" },
+                sizes: "small",
+              }}
               image={wish.imageUri}
               alt=""
             />

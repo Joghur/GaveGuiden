@@ -43,6 +43,7 @@ export interface WishBase {
   price?: string;
   status?: WishStatus;
   person?: string;
+  giver?: string;
   url?: string;
   imageUri?: string;
   comments: Comment[];
