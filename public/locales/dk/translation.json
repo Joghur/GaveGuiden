@@ -1,30 +1,57 @@
 {
+    "both": "Begge",
     "bought": "Købt",
+    "cancel": "Fortryd",
     "change": "Udskift",
-    "comment": "Skriv en kommentar",
+    "comment": "Kommentar",
     "content": "Indhold",
     "created": "Oprettet",
     "delete": "Slet",
+    "editGift": "Lav ændringer i gaven",
     "errors": {
         "missingRecipient": "Vælg en gavemodtager",
         "missingTitle": "Vælg en titel"
     },
     "guide": "Ønskeliste",
     "guideDescription": "Se tvillingernes ønsker",
+    "hi": "Hej",
     "home": "Hjem",
     "imageUri": "Link til billede",
+    "inputName": "Indtast dit navn",
     "invitation": "Invitation",
     "invitationDescription": "Se information fra invitationen her",
     "mainHeader": "Tvillingernes Konfirmation",
+    "makeComment": "Skriv en kommentar",
     "new": "Nyt ønske",
     "newComment": "Ny kommentar",
+    "newGift": "Ny Gave forslag",
     "newWish": "Lav et nyt ønske",
+    "noWish": "Endnu ingen ønsker",
+    "pageGuide": {
+        "newGift": {
+            "text1": "Brug NY GAVE til at vise hvad man har købt istedet for pigernes gaveønsker eller hvad man gerne vil have hjælp til at købe. Gave forslag bliver vist under pigernes gaveønsker.",
+            "text2": "HUSK!! Du kan altid ændre indholdet ved at trykke på gave forslaget og vælge Ændre knappen",
+            "text3": "OBS!! Pigerne kan ikke se disse gave-forslag eller hvad I ellers skriver af kommentarer på siden"
+        },
+        "otherSuggestions": "Andre Gave forslag til"
+    },
+    "pageIndex": {
+        "newFeature": "Ny Feature",
+        "newFeatureText": {
+            "text1": "Pigerne arbejder på at finde på de mest spændende ønsker",
+            "text2": "Hvis det ikke lykkedes at finde noget til dem, er det nu muligt at skrive hvad man har købt istedet eller hvad man gerne vil have hjælp til at købe.",
+            "text3": "Tryk på Ønskelisten her nedenunder og find 'Ny gave' knappen.",
+            "text4": "OBS!! Pigerne kan ikke se disse gave-forslag eller hvad I ellers skriver af kommentarer på siden"
+        }
+    },
     "pending": "Endnu ingen giver",
     "price": "Pris",
     "recipient": "Modtager",
+    "save": "Gem",
     "seekingFunds": "Søger medkøbere",
     "soon": "Kommer snart",
     "submit": "Indsend",
+    "suggestionBy": "Foreslået af",
     "titel": "Titel",
     "whichRecipient": "Hvilken modtager?",
     "wip": "Kommer snart....",

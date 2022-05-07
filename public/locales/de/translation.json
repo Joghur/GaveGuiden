@@ -1,30 +1,57 @@
 {
+    "both": "Beide",
     "bought": "Gekauft",
+    "cancel": "Zurück",
     "change": "Ändern",
-    "comment": "Schreibe einen Kommentar",
+    "comment": "Kommentar",
     "content": "Inhalt",
     "created": "Erstellt",
     "delete": "Löschen",
+    "editGift": "Lav ændringer i gaven",
     "errors": {
         "missingRecipient": "Wählen Sie einen Geschenkempfänger aus",
         "missingTitle": "Wählen Sie einen Titel aus"
     },
     "guide": "Wunschliste",
     "guideDescription": "Siehe die Wunsche der Zwillinge",
+    "hi": "Hallo",
     "home": "Startseite",
     "imageUri": "Link zum Bild",
+    "inputName": "Gib deinen Namen ein",
     "invitation": "Einladung",
     "invitationDescription": "Siehe Informationen aus der Einladung hier",
     "mainHeader": "Konfirmation der Zwillinge",
+    "makeComment": "Schreiben einen neuen Kommentar",
     "new": "Neuer Wunsch",
     "newComment": "Neuer Kommentar",
+    "newGift": "Neues Geschenkvorschlag",
     "newWish": "Neuer Wunsch",
+    "noWish": "Noch keine Wünsche",
+    "pageGuide": {
+        "newGift": {
+            "text1": "Verwenden Sie NEUES GESCHENK, um zu zeigen, was Sie gekauft haben, anstelle der Geschenkwünsche der Mädchen oder was Sie beim Kauf unterstützen möchten. Geschenkvorschläge werden unter den Geschenkwünschen der Mädchen angezeigt.",
+            "text2": "ERINNERN !! Sie können den Inhalt jederzeit ändern, indem Sie auf den Geschenkvorschlag drücken und die Schaltfläche Ändern auswählen",
+            "text3": "HINWEIS !! Die Mädchen können diese Geschenkvorschläge nicht sehen oder was Sie sonst noch an Kommentaren auf der Seite schreiben"
+        },
+        "otherSuggestions": "Weitere Geschenkvorschläge für"
+    },
+    "pageIndex": {
+        "newFeature": "Neue Funktion",
+        "newFeatureText": {
+            "text1": "Die Mädchen arbeiten daran, sich die aufregendsten Wünsche auszudenken",
+            "text2": "Wenn es Ihnen nicht gelungen ist, etwas für sie zu finden, können Sie jetzt schreiben, was Sie stattdessen gekauft haben oder was Sie beim Kauf unterstützen möchten.",
+            "text3": "Klicken Sie unten auf die Wunschliste und suchen Sie die Schaltfläche „Neues Geschenk“.",
+            "text4": "HINWEIS !! Die Mädchen können diese Geschenkvorschläge nicht sehen oder was Sie sonst noch an Kommentaren auf der Seite schreiben"
+        }
+    },
     "pending": "Warten auf Käufer",
     "price": "Preis",
     "recipient": "Empfänger",
-    "soon": "Kommt bald",
+    "save": "Speichern",
     "seekingFunds": "Mitkäufer gesucht",
+    "soon": "Kommt bald",
     "submit": "Zufügen",
+    "suggestionBy": "Vorgeschlagen von",
     "titel": "Titel",
     "vendorUrl": "Link zum Anbieter",
     "whichRecipient": "Welche Empfänger?",

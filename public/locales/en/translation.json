@@ -1,30 +1,57 @@
 {
+    "both": "Both",
     "bought": "Bought",
+    "cancel": "Cancel",
     "change": "Edit",
-    "comment": "Write a comment",
+    "comment": "Comment",
     "content": "Content",
     "created": "Created",
     "delete": "Delete",
+    "editGift": "Lav ændringer i gaven",
     "errors": {
         "missingRecipient": "Please choose a gift recipient",
         "missingTitle": "Select a title"
     },
     "guide": "Wishing list",
     "guideDescription": "See the twins wishes",
+    "hi": "Hi",
     "home": "Home",
     "imageUri": "Link to image",
+    "inputName": "Type your name",
     "invitation": "Invitation",
     "invitationDescription": "See information from invitation here",
     "mainHeader": "Confirmation of the Twins",
-    "pending": "Waiting for buyer",
-    "price": "price",
+    "makeComment": "Make a new comment",
     "new": "New Wish",
     "newComment": "New comment",
+    "newGift": "New Gift suggestion",
     "newWish": "Make a new wish",
+    "noWish": "No wishes yet",
+    "pageGuide": {
+        "newGift": {
+            "text1": "Use NEW GIFT to show what you have bought instead of the girls' gift wishes or what you would like help buying. Gift suggestions are displayed under the girls' gift wishes.",
+            "text2": "REMEMBER !! You can always change the content by pressing the gift suggestion and selecting the Change button",
+            "text3": "NOTE !! The girls can not see these gift suggestions or what else you write of comments on the page"
+        },
+        "otherSuggestions": "Other gift suggestion for"
+    },
+    "pageIndex": {
+        "newFeature": "New Feature",
+        "newFeatureText": {
+            "text1": "The girls are working on coming up with the most exciting wishes",
+            "text2": "If you did not succeed in finding something for them, it is now possible to write what you have bought instead or what you would like help buying.",
+            "text3": "Click on the Wish List below and find the 'New Gift' button.",
+            "text4": "NOTE !! The girls can not see these gift suggestions or what else you write of comments on the page"
+        }
+    },
+    "pending": "Waiting for buyer",
+    "price": "price",
     "recipient": "Recipient",
+    "save": "Save",
     "soon": "Coming soon",
     "seekingFunds": "Seeking co-buyers",
     "submit": "Submit",
+    "suggestionBy": "Suggested by",
     "titel": "Title",
     "vendorUrl": "Link to vendor",
     "whichRecipient": "Which recipient?",
