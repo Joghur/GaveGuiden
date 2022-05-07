@@ -122,11 +122,13 @@ export default function WishDialog(props: WishDialogProps) {
       ];
     }
     console.log("wishDialog - formValues", formValues);
+    setError(() => "");
     onClose(formValues);
   };
 
   const handleClose = () => {
     onClose();
+    setError(() => "");
   };
 
   const handleDelete = () => {
@@ -134,6 +136,7 @@ export default function WishDialog(props: WishDialogProps) {
     if (formValues?.id) {
       onDelete(formValues?.id);
     }
+    setError(() => "");
   };
 
   return (

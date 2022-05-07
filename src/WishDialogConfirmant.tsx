@@ -40,7 +40,7 @@ export default function WishDialogConfirmant(props: WishDialogConfirmantProps) {
   const handleButtonPress = (str: any) => {
     console.log("str", str);
     console.log("confirmant", confirmant);
-    if (!confirmant) {
+    if (confirmant) {
       const { giver: remove, ...rest } = formValues;
       setFormValues({
         ...rest,
