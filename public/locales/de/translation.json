@@ -24,7 +24,7 @@
     "makeComment": "Schreiben einen neuen Kommentar",
     "new": "Neuer Wunsch",
     "newComment": "Neuer Kommentar",
-    "newGift": "Neues Geschenkvorschlag",
+    "newGift": "Neue Geschenkidee",
     "newWish": "Neuer Wunsch",
     "noWish": "Noch keine Wünsche",
     "pageGuide": {
@@ -38,10 +38,10 @@
     "pageIndex": {
         "newFeature": "Neue Funktion",
         "newFeatureText": {
-            "text1": "Die Mädchen arbeiten daran, sich die aufregendsten Wünsche auszudenken",
-            "text2": "Wenn es Ihnen nicht gelungen ist, etwas für sie zu finden, können Sie jetzt schreiben, was Sie stattdessen gekauft haben oder was Sie beim Kauf unterstützen möchten.",
-            "text3": "Klicken Sie unten auf die Wunschliste und suchen Sie die Schaltfläche „Neues Geschenk“.",
-            "text4": "HINWEIS !! Die Mädchen können diese Geschenkvorschläge nicht sehen oder was Sie sonst noch an Kommentaren auf der Seite schreiben"
+            "text1": "Die Mädchen arbeiten daran, sich die aufregendsten Wünsche auszudenken 😀",
+            "text2": "Allerdings dauert das... Wer nicht warten kann, hat hier die Möglichkeit zu schreiben, welches Geschenk stattdessen gekauft wurde oder zu welcher Geschenkidee noch „Unterstützer“ gesucht werden.",
+            "text3": "Einfach unten auf die Wunschliste klicken und auf die Schaltfläche „Neue Geschenkidee“ klicken.",
+            "text4": "HINWEIS !! Für die Mädchen sind weder diese Geschenkvorschläge oder Eure Kommentare auf der Seite sichtbar."
         }
     },
     "pending": "Warten auf Käufer",

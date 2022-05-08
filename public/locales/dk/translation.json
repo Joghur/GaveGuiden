@@ -24,7 +24,7 @@
     "makeComment": "Skriv en kommentar",
     "new": "Nyt ønske",
     "newComment": "Ny kommentar",
-    "newGift": "Ny Gave forslag",
+    "newGift": "Nyt Gave forslag",
     "newWish": "Lav et nyt ønske",
     "noWish": "Endnu ingen ønsker",
     "pageGuide": {
@@ -38,9 +38,9 @@
     "pageIndex": {
         "newFeature": "Ny Feature",
         "newFeatureText": {
-            "text1": "Pigerne arbejder på at finde på de mest spændende ønsker",
+            "text1": "Pigerne arbejder på at finde på de mest spændende ønsker 😀",
             "text2": "Hvis det ikke lykkedes at finde noget til dem, er det nu muligt at skrive hvad man har købt istedet eller hvad man gerne vil have hjælp til at købe.",
-            "text3": "Tryk på Ønskelisten her nedenunder og find 'Ny gave' knappen.",
+            "text3": "Tryk på Ønskelisten her nedenunder og find 'Nyt Gave forslag' knappen.",
             "text4": "OBS!! Pigerne kan ikke se disse gave-forslag eller hvad I ellers skriver af kommentarer på siden"
         }
     },
