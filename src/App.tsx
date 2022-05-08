@@ -58,7 +58,7 @@ export default function App() {
                 <Typography variant="h5" style={{ fontStyle: "bold" }}>
                   {t("pageIndex.newFeature")}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" paragraph>
                   {t("pageIndex.newFeatureText.text1")}
                 </Typography>
                 <Typography variant="body1" paragraph>
