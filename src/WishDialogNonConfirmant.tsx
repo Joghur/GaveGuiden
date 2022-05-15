@@ -2,8 +2,7 @@ import {
   Button,
   Card,
   CardMedia,
-  Dialog,
-  DialogTitle,
+  Fade,
   Grid,
   Link,
   TextField,
@@ -12,10 +11,8 @@ import {
   DialogContentText,
   DialogActions,
   Tooltip,
-  Stack,
   Chip,
 } from "@mui/material";
-import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Wish, WishStatus } from "./types";
@@ -61,96 +58,129 @@ export default function WishDialogNonConfirmant(
 
   return (
     <>
-      <DialogContent>
-        <Typography variant="h5" paragraph noWrap>
-          {formValues.person && formValues.person}
-        </Typography>
-      </DialogContent>
-      {formValues?.imageUri && (
-        <Card sx={{ display: "flex", width: "100%" }}>
-          <CardMedia
-            component="img"
-            sx={{ width: 160, display: { sm: "block" } }}
-            image={formValues.imageUri}
-            alt=""
-          />
-        </Card>
-      )}
-      <DialogContent>
-        <Typography variant="h5" noWrap paragraph>
-          {formValues.titel && formValues.titel}
-        </Typography>
-      </DialogContent>
-      <DialogContent>
-        <Typography paragraph>
-          {formValues.content && formValues.content}
-        </Typography>
-      </DialogContent>
-      <DialogContent>
-        <Typography paragraph>
-          {formValues.price && `Pris ${formValues.price}`}
-        </Typography>
-      </DialogContent>
-      {formValues.url && (
+      <Grid container direction="row" justifyContent="center" sx={{ m: 2 }}>
+        <Grid item xs={12} md={7}>
+          <DialogContent>
+            <Typography variant="h5" paragraph noWrap>
+              {formValues.person && formValues.person}
+            </Typography>
+            {formValues?.imageUri && (
+              <CardMedia
+                component="img"
+                sx={{ width: 160, display: { sm: "block" } }}
+                image={formValues.imageUri}
+                alt=""
+              />
+            )}
+            <Typography variant="h5" noWrap={false} paragraph>
+              {formValues.titel && formValues.titel}
+            </Typography>
+            <Typography paragraph>
+              {formValues.content && formValues.content}
+            </Typography>
+            <Typography paragraph>
+              {formValues.price && `${t("price")} ${formValues.price}`}
+            </Typography>
+            {formValues.url && (
+              <Typography variant="h5" paragraph>
+                <Link href={formValues.url} underline="none">
+                  {t("linkVendor")}
+                </Link>
+              </Typography>
+            )}
+          </DialogContent>
+        </Grid>
+        <Grid container item xs={8} md={4}>
+          <Card variant="outlined">
+            <DialogContent>
+              <Tooltip
+                title={t("tooltip.changeStatus")}
+                TransitionComponent={Fade}
+                TransitionProps={{ timeout: 600 }}
+              >
+                <Grid container item direction="column" spacing={1}>
+                  <Grid item>
+                    <Typography variant="subtitle2">
+                      {t("changeState")}
+                    </Typography>
+                    <Typography variant="body2" color="GrayText">
+                      {t("tooltip.changeStatus")}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Chip
+                      label={t("bought")}
+                      color="error"
+                      variant={
+                        formValues.status === "bought" ? "filled" : "outlined"
+                      }
+                      clickable
+                      onClick={() => handleStatusChange("bought")}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Chip
+                      label={t("seekingFunds")}
+                      color="warning"
+                      variant={
+                        formValues.status === "seekingFunds"
+                          ? "filled"
+                          : "outlined"
+                      }
+                      clickable
+                      onClick={() => handleStatusChange("seekingFunds")}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Chip
+                      label={t("comment")}
+                      color="info"
+                      variant={
+                        formValues.status === "comment" ? "filled" : "outlined"
+                      }
+                      clickable
+                      onClick={() => handleStatusChange("comment")}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Chip
+                      label={t("pending")}
+                      color="success"
+                      variant={
+                        formValues.status === "pending" ? "filled" : "outlined"
+                      }
+                      clickable
+                      onClick={() => handleStatusChange("pending")}
+                    />{" "}
+                  </Grid>
+                </Grid>
+              </Tooltip>
+            </DialogContent>
+          </Card>
+        </Grid>
+        <Grid item>
+          <DialogContentText>
+            <Comments comments={formValues.comments} />
+          </DialogContentText>
+        </Grid>
+      </Grid>
+      <Grid item>
         <DialogContent>
-          <Typography variant="h5" paragraph>
-            <Link href={formValues.url}>Link til forhandler</Link>
-          </Typography>
+          <TextField
+            id="comment"
+            name="comment"
+            label={t("makeComment")}
+            type="text"
+            value={comment}
+            onChange={(e) => handleComment(e)}
+            multiline
+            sx={{ width: "100%" }}
+          />
         </DialogContent>
-      )}
-      <DialogContent>
-        <Stack direction="row" alignItems="content" spacing={1}>
-          <Typography paragraph>Skift status</Typography>
-          <Chip
-            label={t("bought")}
-            color="error"
-            variant={formValues.status === "bought" ? "filled" : "outlined"}
-            clickable
-            onClick={() => handleStatusChange("bought")}
-          />
-          <Chip
-            label={t("seekingFunds")}
-            color="warning"
-            variant={
-              formValues.status === "seekingFunds" ? "filled" : "outlined"
-            }
-            clickable
-            onClick={() => handleStatusChange("seekingFunds")}
-          />
-          <Chip
-            label={t("comment")}
-            color="info"
-            variant={formValues.status === "comment" ? "filled" : "outlined"}
-            clickable
-            onClick={() => handleStatusChange("comment")}
-          />
-          <Chip
-            label={t("pending")}
-            color="success"
-            variant={formValues.status === "pending" ? "filled" : "outlined"}
-            clickable
-            onClick={() => handleStatusChange("pending")}
-          />
-        </Stack>
-      </DialogContent>
-      <DialogContentText>
-        <Comments comments={formValues.comments} />
-      </DialogContentText>
-      <DialogContent>
-        <TextField
-          id="comment"
-          name="comment"
-          label={t("makeComment")}
-          type="text"
-          value={comment}
-          onChange={(e) => handleComment(e)}
-          multiline
-          sx={{width:"100%"}}
-        />
-      </DialogContent>
+      </Grid>
       <DialogActions>
-        <Grid container justifyContent="space-between">
-          <Grid item>
+        <Grid container justifyContent="center" alignItems="center">
+          <Grid item xs={4}>
             <Button
               onClick={handleClose}
               variant="contained"
@@ -161,7 +191,7 @@ export default function WishDialogNonConfirmant(
             </Button>
           </Grid>
           {formValues.giver && (
-            <Grid item>
+            <Grid item xs={4}>
               <Tooltip
                 followCursor={true}
                 title="Du kan ændre dit gave forslag her"
@@ -177,7 +207,7 @@ export default function WishDialogNonConfirmant(
               </Tooltip>
             </Grid>
           )}
-          <Grid item>
+          <Grid item xs={4}>
             <Button
               onClick={handleSubmit}
               variant="contained"

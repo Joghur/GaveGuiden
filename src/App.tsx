@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Container, CssBaseline, Grid, Typography } from "@mui/material";
+import { Container, CssBaseline, Grid, Badge, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import Header from "./Header";
@@ -14,7 +14,7 @@ import { mainFeaturedPost, featuredPosts } from "./config";
 
 const theme = createTheme();
 
-export default function App() {
+export default function MainApp() {
   const { t, i18n } = useTranslation(["translation"]);
 
   const [page, setPage] = useState<"main" | "guide">("main");
@@ -55,9 +55,18 @@ export default function App() {
               style={{ textAlign: "center" }}
             >
               <Grid item xs={7}>
-                <Typography variant="h5" style={{ fontStyle: "bold" }}>
-                  {t("pageIndex.newFeature")}
-                </Typography>
+                <Badge
+                  badgeContent={t("badge.changeName")}
+                  color="info"
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                >
+                  <Typography variant="h5" style={{ fontStyle: "bold" }}>
+                    {t("pageIndex.newFeature")}
+                  </Typography>
+                </Badge>
                 <Typography variant="body1" paragraph>
                   {t("pageIndex.newFeatureText.text1")}
                 </Typography>
@@ -77,12 +86,10 @@ export default function App() {
             <Grid container spacing={4} justifyContent="center">
               {featuredPosts.map((post) => {
                 return (
-                  <Grid item>
+                  <Grid key={post.title} item xs={11}>
                     <FeaturedPost
-                      key={post.title}
                       post={post}
                       onClick={() => handleFeaturePostClick(post)}
-                      onCancel={() => setPage("main")}
                     />
                   </Grid>
                 );
@@ -94,7 +101,7 @@ export default function App() {
           </>
         )}
         {page === "guide" && (
-          <Grid item>
+          <Grid item xs={6}>
             <Guide />
           </Grid>
         )}

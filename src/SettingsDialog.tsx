@@ -5,7 +5,6 @@ import {
   DialogTitle,
   Grid,
   TextField,
-  Typography,
   DialogContent,
   DialogContentText,
   DialogActions,
@@ -22,7 +21,6 @@ const SettingsDialog = (props: SettingDialogProps) => {
   const { t } = useTranslation(["translation"]);
 
   const [formValues, setFormValues] = useState("");
-  const [error, setError] = useState("");
 
   const { open, onClose, changeUser } = props;
 
@@ -53,9 +51,6 @@ const SettingsDialog = (props: SettingDialogProps) => {
               value={formValues}
               onChange={handleInputChange}
             />
-          </DialogContentText>
-          <DialogContentText>
-            <Typography color="red">{error}</Typography>
           </DialogContentText>
         </DialogContent>
         <Grid container justifyContent="center">

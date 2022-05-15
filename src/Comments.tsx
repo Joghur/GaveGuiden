@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import React from "react";
 
 import { Comment } from "./types";
@@ -17,10 +17,21 @@ const Comments = (props: Props) => {
   }
 
   return (
-    <div>
-      {comments.length > 0 &&
-        comments.map((c: Comment) => <Typography>{`${c.commenter} - ${c.comment}`}</Typography>)}
-    </div>
+    <>
+      <Grid container direction="column" spacing={2}>
+        {comments.length > 0 &&
+          comments.map((c: Comment) => (
+            <Grid container item direction="column">
+              <Grid item>
+                <Typography color="CaptionText">{c.commenter}</Typography>
+              </Grid>
+              <Grid item  sx={{marginRight: 5}}>
+                <Typography noWrap={false}>{` - ${c.comment}`}</Typography>
+              </Grid>
+            </Grid>
+          ))}
+      </Grid>
+    </>
   );
 };
 

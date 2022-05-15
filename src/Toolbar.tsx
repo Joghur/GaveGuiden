@@ -2,8 +2,8 @@ import * as React from "react";
 import { Button, Grid, Link, Toolbar } from "@mui/material";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import { useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 interface HeaderProps {
   sections?: ReadonlyArray<{
@@ -20,7 +20,8 @@ interface HeaderProps {
 export default function ToolbarLine(props: HeaderProps) {
   const { t } = useTranslation(["translation"]);
 
-  const { sections, languages, settings } = props;
+//   const { sections, languages, settings } = props;
+  const { sections, languages } = props;
 
   return (
     <React.Fragment>

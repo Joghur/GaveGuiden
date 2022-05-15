@@ -17,18 +17,17 @@ interface FeaturedPostProps {
     title: string;
   };
   onClick?: () => void;
-  onCancel?: () => void;
 }
 
 export default function FeaturedPost(props: FeaturedPostProps) {
   const { t } = useTranslation(["translation"]);
 
-  const { post, onClick, onCancel } = props;
+  const { post, onClick } = props;
 
   return (
     <Grid item>
       <Link onClick={onClick} underline="none">
-        <Card sx={{ display: "flex" }}>
+        <Card sx={{ display: "flex" }} raised>
           <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">
               {t(post.title)}
