@@ -1,13 +1,17 @@
 {
+    "badge": {
+        "changeName": "Skift navn"
+    },
     "both": "Begge",
-    "bought": "Købt",
+    "bought": "Købt / Reserveret",
     "cancel": "Fortryd",
     "change": "Udskift",
+    "changeState": "Skift status",
     "comment": "Kommentar",
     "content": "Indhold",
     "created": "Oprettet",
     "delete": "Slet",
-    "editGift": "Lav ændringer i gaven",
+    "editGiftText": "Ændr",
     "errors": {
         "missingRecipient": "Vælg en gavemodtager",
         "missingTitle": "Vælg en titel"
@@ -20,6 +24,7 @@
     "inputName": "Indtast dit navn",
     "invitation": "Invitation",
     "invitationDescription": "Se information fra invitationen her",
+    "linkVendor": "Link to vendor",
     "mainHeader": "Tvillingernes Konfirmation",
     "makeComment": "Skriv en kommentar",
     "new": "Nyt ønske",
@@ -29,7 +34,7 @@
     "noWish": "Endnu ingen ønsker",
     "pageGuide": {
         "newGift": {
-            "text1": "Brug NY GAVE til at vise hvad man har købt istedet for pigernes gaveønsker eller hvad man gerne vil have hjælp til at købe. Gave forslag bliver vist under pigernes gaveønsker.",
+            "text1": "Brug NYT GAVE FORSLAG knappen til at vise hvad man har købt istedet for pigernes gave-ønsker eller hvad man gerne vil have hjælp til at købe. Gave forslag bliver vist under pigernes gaveønsker.",
             "text2": "HUSK!! Du kan altid ændre indholdet ved at trykke på gave forslaget og vælge Ændre knappen",
             "text3": "OBS!! Pigerne kan ikke se disse gave-forslag eller hvad I ellers skriver af kommentarer på siden"
         },
@@ -52,6 +57,10 @@
     "soon": "Kommer snart",
     "submit": "Indsend",
     "suggestionBy": "Foreslået af",
+    "tooltip": {
+        "changeName": "Skift dette navn - der kun bruges i kommentarer og gave-foreslag",
+        "changeStatus": "Tryk på status for at ændre. Bruges til at signalere hvad du vil gøre med gaven."
+    },
     "titel": "Titel",
     "whichRecipient": "Hvilken modtager?",
     "wip": "Kommer snart....",

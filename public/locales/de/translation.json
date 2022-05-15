@@ -1,13 +1,17 @@
 {
+    "badge": {
+        "changeName": "Namen ändern"
+    },
     "both": "Beide",
-    "bought": "Gekauft",
+    "bought": "Gekauft / Reserviert",
     "cancel": "Zurück",
     "change": "Ändern",
+    "changeState": "Status ändern",
     "comment": "Kommentar",
     "content": "Inhalt",
     "created": "Erstellt",
     "delete": "Löschen",
-    "editGift": "Lav ændringer i gaven",
+    "editGiftText": "Ändern",
     "errors": {
         "missingRecipient": "Wählen Sie einen Geschenkempfänger aus",
         "missingTitle": "Wählen Sie einen Titel aus"
@@ -20,6 +24,7 @@
     "inputName": "Gib deinen Namen ein",
     "invitation": "Einladung",
     "invitationDescription": "Siehe Informationen aus der Einladung hier",
+    "linkVendor": "Link zum Händler",
     "mainHeader": "Konfirmation der Zwillinge",
     "makeComment": "Schreiben einen neuen Kommentar",
     "new": "Neuer Wunsch",
@@ -29,7 +34,7 @@
     "noWish": "Noch keine Wünsche",
     "pageGuide": {
         "newGift": {
-            "text1": "Verwenden Sie NEUES GESCHENK, um zu zeigen, was Sie gekauft haben, anstelle der Geschenkwünsche der Mädchen oder was Sie beim Kauf unterstützen möchten. Geschenkvorschläge werden unter den Geschenkwünschen der Mädchen angezeigt.",
+            "text1": "Verwenden Sie die Schaltfläche NEUES GESCHENKIDEEN, um zu zeigen, was Sie gekauft haben, anstelle der Geschenkwünsche der Mädchen oder was Sie beim Kauf unterstützen möchten. Geschenkvorschläge werden unter den Geschenkwünschen der Mädchen angezeigt.",
             "text2": "ERINNERN !! Sie können den Inhalt jederzeit ändern, indem Sie auf den Geschenkvorschlag drücken und die Schaltfläche Ändern auswählen",
             "text3": "HINWEIS !! Die Mädchen können diese Geschenkvorschläge nicht sehen oder was Sie sonst noch an Kommentaren auf der Seite schreiben"
         },
@@ -52,6 +57,10 @@
     "soon": "Kommt bald",
     "submit": "Zufügen",
     "suggestionBy": "Vorgeschlagen von",
+    "tooltip": {
+        "changeName": "Ändern Sie diesen Namen – wird nur in Kommentaren und Geschenkvorschlägen verwendet",
+        "changeStatus": "Tippen Sie zum Ändern auf den Status. Wird verwendet, um zu signalisieren, was mit dem Geschenk geschehen soll."
+    },
     "titel": "Titel",
     "vendorUrl": "Link zum Anbieter",
     "whichRecipient": "Welche Empfänger?",

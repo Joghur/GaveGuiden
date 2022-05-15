@@ -1,13 +1,17 @@
 {
+    "badge":{
+        "changeName": "Change name"
+    },
     "both": "Both",
-    "bought": "Bought",
+    "bought": "Bought / Reserved",
     "cancel": "Cancel",
     "change": "Edit",
+    "changeState": "Change status",
     "comment": "Comment",
     "content": "Content",
     "created": "Created",
     "delete": "Delete",
-    "editGift": "Lav ændringer i gaven",
+    "editGiftText": "Edit",
     "errors": {
         "missingRecipient": "Please choose a gift recipient",
         "missingTitle": "Select a title"
@@ -20,6 +24,7 @@
     "inputName": "Type your name",
     "invitation": "Invitation",
     "invitationDescription": "See information from invitation here",
+    "linkVendor": "Link to vendor",
     "mainHeader": "Confirmation of the Twins",
     "makeComment": "Make a new comment",
     "new": "New Wish",
@@ -29,11 +34,11 @@
     "noWish": "No wishes yet",
     "pageGuide": {
         "newGift": {
-            "text1": "Use NEW GIFT to show what you have bought instead of the girls' gift wishes or what you would like help buying. Gift suggestions are displayed under the girls' gift wishes.",
+            "text1": "Use the NEW GIFT SUGGESTION button to show what you have bought instead of the girls' gift wishes or what you would like help buying. Gift suggestions are displayed under the girls' gift wishes.",
             "text2": "REMEMBER !! You can always change the content by pressing the gift suggestion and selecting the Change button",
             "text3": "NOTE !! The girls can not see these gift suggestions or what else you write of comments on the page"
         },
-        "otherSuggestions": "Other gift suggestion for"
+        "otherSuggestions": "Other gift suggestions for"
     },
     "pageIndex": {
         "newFeature": "New Feature",
@@ -45,13 +50,17 @@
         }
     },
     "pending": "Waiting for buyer",
-    "price": "price",
+    "price": "Price",
     "recipient": "Recipient",
     "save": "Save",
     "soon": "Coming soon",
     "seekingFunds": "Seeking co-buyers",
     "submit": "Submit",
     "suggestionBy": "Suggested by",
+    "tooltip": {
+        "changeName": "Change this name -  which is only used in comments and gift-suggestions",
+        "changeStatus": "Tap status to change. Used to signal what you want to do with the gift."
+    },
     "titel": "Title",
     "vendorUrl": "Link to vendor",
     "whichRecipient": "Which recipient?",
